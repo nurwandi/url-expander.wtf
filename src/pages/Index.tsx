@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import HeroSection from '@/components/HeroSection';
 import UrlForm from '@/components/UrlForm';
 import ResultDisplay from '@/components/ResultDisplay';
@@ -11,9 +11,11 @@ import { useIsMobile } from '@/hooks/use-mobile';
 const Index = () => {
   const [expandedUrl, setExpandedUrl] = useState('');
   const isMobile = useIsMobile();
+  const resultSectionRef = useRef<HTMLDivElement>(null);
   
   const handleUrlExpanded = (url: string) => {
     setExpandedUrl(url);
+    // We'll let the ResultDisplay component handle the scroll
   };
   
   return (
@@ -63,7 +65,7 @@ const Index = () => {
           
           {/* Results Display (conditionally rendered) */}
           {expandedUrl && (
-            <div className="w-full py-16 md:py-24 bg-white">
+            <div className="w-full py-16 md:py-24 bg-white" ref={resultSectionRef}>
               <div className="container mx-auto px-4">
                 <div className="w-full max-w-3xl mx-auto">
                   <ResultDisplay expandedUrl={expandedUrl} />

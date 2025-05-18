@@ -1,9 +1,8 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { getUrlMapping } from '@/lib/supabase';
-import { Clock } from 'lucide-react';
+import { Clock, Link } from 'lucide-react';
 import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -109,7 +108,7 @@ const ExpandedUrl = () => {
   return (
     <div className="flex flex-col h-screen bg-pastel-bg text-pastel-text">
       {/* Header consistent with main page */}
-      <header className="py-4 md:py-5 bg-white shadow-sm">
+      <header className="py-3 md:py-4 bg-white shadow-sm">
         <div className="container mx-auto px-4 flex items-center justify-between">
           <h1 className="text-lg md:text-xl font-bold font-display header-title">
             <span className="text-bold-blue font-extrabold">url-</span>
@@ -121,15 +120,17 @@ const ExpandedUrl = () => {
 
       {/* Main content that takes all available space */}
       <div className="flex-1 flex items-center justify-center p-4">
-        <Card className={`w-full max-w-md mx-auto p-6 ${isMobile ? 'h-auto' : 'h-auto max-h-[90vh]'} flex flex-col overflow-hidden`}>
+        <Card className={`w-full max-w-md mx-auto p-4 md:p-6 ${isMobile ? 'h-auto' : 'h-auto max-h-[80vh]'} flex flex-col overflow-hidden`}>
           {isLoading ? (
             // Loading state
-            <div className="flex flex-col items-center justify-center h-full space-y-6">
-              <div className="h-16 w-16 rounded-full bg-pastel-blue/20 flex items-center justify-center mb-2">
-                <div className="w-10 h-10 border-4 border-t-transparent border-pastel-blue rounded-full animate-spin"></div>
+            <div className="flex flex-col items-center justify-center h-full space-y-4 md:space-y-6">
+              <div className="h-12 w-12 md:h-16 md:w-16 rounded-full bg-pastel-blue/20 flex items-center justify-center mb-2">
+                <div className="w-8 h-8 md:w-10 md:h-10 border-4 border-t-transparent border-pastel-blue rounded-full animate-spin"></div>
               </div>
               
-              <h1 className="text-2xl font-bold font-display text-pastel-text">Processing URL...</h1>
+              <div className="text-sm md:text-lg font-bold font-display text-pastel-text">
+                Processing URL...
+              </div>
               
               <div className="w-full h-2 bg-pastel-blue/20 rounded-full overflow-hidden animate-pulse">
                 <div className="h-full bg-pastel-blue animate-[slideIn_2s_ease-in-out_infinite]" style={{width: '70%'}}></div>
@@ -138,8 +139,8 @@ const ExpandedUrl = () => {
           ) : (
             // Redirect state
             <div className="flex flex-col items-center justify-between h-full">
-              <div className="flex flex-col items-center text-center space-y-4 w-full">
-                <div className="overflow-hidden rounded-lg w-full max-h-[50vh] flex-shrink-0">
+              <div className="flex flex-col items-center text-center space-y-3 md:space-y-4 w-full">
+                <div className="overflow-hidden rounded-lg w-full max-h-[40vh] flex-shrink-0">
                   <img 
                     src={SURPRISE_IMAGE_URL} 
                     alt="Surprise!" 
@@ -147,25 +148,27 @@ const ExpandedUrl = () => {
                   />
                 </div>
                 
-                <div className="h-12 w-12 rounded-full bg-pastel-blue/20 flex items-center justify-center mb-2">
-                  <Clock className="h-8 w-8 text-pastel-pink" />
+                <div className="h-10 w-10 md:h-12 md:w-12 rounded-full bg-pastel-blue/20 flex items-center justify-center mb-0 md:mb-2">
+                  <Clock className="h-6 w-6 md:h-8 md:w-8 text-pastel-pink" />
                 </div>
                 
                 <div className="space-y-2 flex-grow">
-                  <h1 className="text-xl md:text-2xl font-bold font-display text-pastel-text">Redirecting you...</h1>
+                  <div className="text-sm md:text-lg font-bold font-display text-pastel-text">
+                    Redirecting you...
+                  </div>
                   
-                  <p className="text-pastel-text/80 text-sm md:text-base">
+                  <p className="text-xs md:text-sm text-pastel-text/80">
                     {message}
                   </p>
                   
-                  <p className="text-lg md:text-xl font-bold text-pastel-pink">
+                  <p className="text-xs md:text-sm font-bold text-pastel-pink">
                     Redirecting in {countdown} seconds...
                   </p>
                 </div>
               </div>
               
               <Progress 
-                className="w-full h-2 mt-4 bg-pastel-blue/20" 
+                className="w-full h-2 mt-3 md:mt-4 bg-pastel-blue/20" 
                 value={(countdown / 5) * 100} 
               />
             </div>
@@ -174,13 +177,13 @@ const ExpandedUrl = () => {
       </div>
       
       {/* Footer */}
-      <footer className="border-t border-gray-100 py-4 bg-pastel-bg">
+      <footer className="border-t border-gray-100 py-3 md:py-4 bg-pastel-bg">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <p className="text-pastel-text text-xs md:text-sm mb-1 flex items-center justify-center gap-2">
-              Built with <Clock size={18} className="text-pastel-pink" /> and with no single purpose
+              Built with <Link size={16} className="text-pastel-pink" /> for making URLs unnecessarily long
             </p>
-            <p className="text-pastel-text/70 text-xs">
+            <p className="text-pastel-text/70 text-[10px] md:text-xs">
               © {new Date().getFullYear()} - I don't know how to build a good website. So advise me <a href="https://github.com/nurwandi" className="text-pastel-blue hover:underline" target="_blank" rel="noopener noreferrer">here</a>
             </p>
           </div>
