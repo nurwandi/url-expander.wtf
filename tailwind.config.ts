@@ -69,6 +69,8 @@ export default {
 				'pastel-mint': '#A1DDCA',
 				'pastel-bg': '#FFFFFF',
 				'pastel-text': '#414042',
+				// Add bold blue color for header and footer
+				'bold-blue': '#1EAEDB',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

@@ -30,7 +30,7 @@ const FaqSection: React.FC = () => {
     },
     {
       question: "Did you really build this?",
-      answer: "Yes. I spent actual hours of my finite existence on Earth creating a service that makes URLs worse. This is what peak performance looks like. Follow me for more career advice."
+      answer: "Yes. I spent actual hours of my finite existence on Earth creating a service that makes URLs worse. This is what peak performance looks like."
     }
   ];
   

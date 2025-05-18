@@ -12,8 +12,8 @@ DECLARE
   result text;
 BEGIN
   SELECT net.http_post(
-    url:='https://mxbwehmwcnvsheducwkt.supabase.co/functions/v1/cleanup-expired-urls',
-    headers:='{"Content-Type": "application/json", "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im14YndlaG13Y252c2hlZHVjd2t0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1NjQ0OTcsImV4cCI6MjA2MzE0MDQ5N30.FjtHSzvcHq8KvF85mA3zlpVpndGUwNq8mKuEr_fVePw"}'::jsonb,
+    url:='https://.supabase.co/functions/v1/cleanup-expired-urls',
+    headers:='{"Content-Type": "application/json", "Authorization": "Bearer "}'::jsonb,
     body:='{}'::jsonb
   ) INTO result;
   

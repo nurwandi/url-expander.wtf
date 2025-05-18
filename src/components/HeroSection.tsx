@@ -1,9 +1,12 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
+
 const HeroSection: React.FC = () => {
   const isMobile = useIsMobile();
-  return <div className="w-full max-w-4xl mx-auto text-center relative py-12 md:py-[25px]">      
+  return (
+    <div className="w-full max-w-4xl mx-auto text-center relative py-12 md:py-[25px]">      
       <div className="relative z-10">
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 md:mb-8 font-display tracking-tight leading-tight slide-up">
           <span className="block">
@@ -19,9 +22,9 @@ const HeroSection: React.FC = () => {
           
           <p className="text-base md:text-lg text-pastel-text/80 leading-relaxed">
             Now I'm here, celebrating the joy of accomplishment with an app designed to make your URLs 
-            <span className="font-medium text-pastel-pink"> unnecessarily longer</span>, 
-            <span className="font-medium text-pastel-blue"> more complex</span>, and 
-            <span className="font-medium"> entirely pointless</span>.
+            <span className="font-medium text-pastel-pink underline decoration-2 decoration-pastel-pink"> unnecessarily longer</span>, 
+            <span className="font-medium text-pastel-blue underline decoration-2 decoration-pastel-blue"> more complex</span>, and 
+            <span className="font-medium underline decoration-2"> entirely pointless</span>.
           </p>
         </div>
         
@@ -36,9 +39,9 @@ const HeroSection: React.FC = () => {
             <p className="text-pastel-mint font-medium text-sm">🚀 Wonderfully Useless</p>
           </div>
         </div>
-        
-        
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default HeroSection;

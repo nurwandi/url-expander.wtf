@@ -1,5 +1,5 @@
 
-project_id = "mxbwehmwcnvsheducwkt"
+project_id = ""
 
 [functions.cleanup-expired-urls]
 verify_jwt = false
