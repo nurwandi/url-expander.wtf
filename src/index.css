@@ -1,0 +1,163 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 256 6% 26%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 256 6% 26%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 256 6% 26%;
+
+    --primary: 195 75% 72%;
+    --primary-foreground: 256 6% 26%;
+
+    --secondary: 332 100% 75%;
+    --secondary-foreground: 256 6% 26%;
+
+    --muted: 280 30% 90%;
+    --muted-foreground: 256 6% 60%;
+
+    --accent: 154 49% 75%;
+    --accent-foreground: 256 6% 26%;
+
+    --destructive: 0 70% 80%;
+    --destructive-foreground: 0 0% 20%;
+
+    --border: 280 30% 85%;
+    --input: 280 30% 85%;
+    --ring: 195 75% 72%;
+
+    --radius: 1rem;
+
+    --sidebar-background: 280 30% 95%;
+    --sidebar-foreground: 256 6% 60%;
+    --sidebar-primary: 195 75% 72%;
+    --sidebar-primary-foreground: 256 6% 26%;
+    --sidebar-accent: 280 30% 90%;
+    --sidebar-accent-foreground: 256 6% 60%;
+    --sidebar-border: 280 30% 85%;
+    --sidebar-ring: 195 75% 72%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-pastel-bg text-pastel-text font-sans;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display font-bold;
+  }
+}
+
+/* Animation utilities */
+.slide-up {
+  opacity: 0;
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in-delay-1 {
+  opacity: 0;
+  animation: slideIn 0.6s ease-out 0.1s forwards;
+}
+
+.slide-in-delay-2 {
+  opacity: 0;
+  animation: slideIn 0.6s ease-out 0.2s forwards;
+}
+
+.slide-in-delay-3 {
+  opacity: 0;
+  animation: slideIn 0.6s ease-out 0.3s forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Clean button style */
+.clean-button {
+  @apply bg-pastel-blue text-pastel-text font-display font-bold py-3 px-6 rounded-lg transition-all hover:translate-y-[-2px] hover:shadow-lg;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  h2 {
+    font-size: 2rem !important;
+  }
+  
+  .header-title {
+    font-size: 1.25rem !important;
+  }
+  
+  .mobile-padding {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  .mobile-text-base {
+    font-size: 1rem !important;
+  }
+  
+  .mobile-py {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+}
+
+/* Form elements styling */
+.input-clean {
+  @apply bg-white border-2 border-pastel-blue text-pastel-text rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pastel-blue transition-all;
+}
+
+.button-clean {
+  @apply bg-pastel-pink text-white font-bold py-3 px-6 rounded-lg transition-all hover:translate-y-[-2px] hover:shadow-lg;
+}
+
+/* Section styling */
+.section-padding {
+  @apply py-16 md:py-24;
+}
+
+.section-heading {
+  @apply text-3xl md:text-4xl font-bold mb-8 text-center;
+}
+
+/* Card styling */
+.card-clean {
+  @apply bg-white rounded-xl p-6 md:p-8 shadow-sm hover:shadow-md transition-all;
+}

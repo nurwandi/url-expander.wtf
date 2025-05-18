@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo Installing dependencies...
+      - npm ci
+  build:
+    commands:
+      - echo Building the app...
+      - npm run build
+  post_build:
+    commands:
+      - echo "Invalidating CloudFront cache..."
+      - aws cloudfront create-invalidation --distribution-id E3P9MBHT43Z7M2 --paths "/*"
+
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: dist

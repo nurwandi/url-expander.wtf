@@ -1,0 +1,5 @@
+
+project_id = "mxbwehmwcnvsheducwkt"
+
+[functions.cleanup-expired-urls]
+verify_jwt = false
