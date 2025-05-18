@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { toast } from 'sonner';
@@ -15,12 +15,20 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ expandedUrl }) => {
   const [joke, setJoke] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [copied, setCopied] = useState(false);
+  const resultRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
   
   useEffect(() => {
     if (expandedUrl) {
       setJoke(getRandomJoke());
       setExpirationDate(getExpirationDate());
+      
+      // Add a slight delay to ensure the component is rendered
+      setTimeout(() => {
+        if (resultRef.current) {
+          resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
     }
   }, [expandedUrl]);
   
@@ -38,7 +46,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ expandedUrl }) => {
   if (!expandedUrl) return null;
   
   return (
-    <div className="w-full">
+    <div className="w-full" ref={resultRef}>
       <Card className="overflow-hidden relative bg-white rounded-xl border-none shadow-md">
         <div className="absolute top-0 left-0 w-full h-1 bg-pastel-blue" />
         
