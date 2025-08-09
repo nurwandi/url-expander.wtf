@@ -64,8 +64,8 @@ const addSatiricalPhrases = (url: string): string => {
 
 // Main function to expand a URL
 export const expandUrl = async (originalUrl: string): Promise<string> => {
-  // If URL doesn't have protocol, add https://
-  const urlToExpand = originalUrl.startsWith('http') ? originalUrl : `https://${originalUrl}`;
+  // URL should already be normalized with protocol from the form
+  const urlToExpand = originalUrl;
   
   // Generate a random part
   const randomPart = generateRandomString(8);

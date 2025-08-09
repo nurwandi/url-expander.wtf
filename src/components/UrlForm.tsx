@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from 'sonner';
 import { expandUrl } from '@/utils/urlExpander';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { isValidUrl, normalizeUrl, isCommonInvalidInput } from '@/utils/urlValidator';
 
 interface UrlFormProps {
   onUrlExpanded: (expandedUrl: string) => void;
@@ -18,33 +19,40 @@ const UrlForm: React.FC<UrlFormProps> = ({ onUrlExpanded }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!url.trim()) {
+    const trimmedUrl = url.trim();
+    
+    if (!trimmedUrl) {
       toast.error("Hey friend! You forgot to enter a URL. I need something to work with here!");
       return;
     }
     
-    // Check for valid URL format
+    // Check for common invalid inputs first
+    if (isCommonInvalidInput(trimmedUrl)) {
+      toast.error("That doesn't look like a valid URL. Try something like 'google.com' or 'https://example.com'");
+      return;
+    }
+    
+    // Validate URL format
+    if (!isValidUrl(trimmedUrl)) {
+      toast.error("Please enter a valid URL. Examples: google.com, https://github.com, example.org/path");
+      return;
+    }
+    
+    setIsExpanding(true);
+    
     try {
-      // If URL doesn't have protocol, add https://
-      const urlToCheck = url.startsWith('http') ? url : `https://${url}`;
-      new URL(urlToCheck);
+      // Normalize the URL (add protocol if missing)
+      const normalizedUrl = normalizeUrl(trimmedUrl);
       
-      setIsExpanding(true);
-      
-      try {
-        // Expand the URL with our service
-        const expanded = await expandUrl(url);
-        onUrlExpanded(expanded);
-        toast.success("URL unnecessarily expanded! It's completely ridiculous now!");
-      } catch (error) {
-        console.error("Error expanding URL:", error);
-        toast.error("Something went wrong while expanding your URL. Please try again.");
-      } finally {
-        setIsExpanding(false);
-      }
-      
+      // Expand the URL with our service
+      const expanded = await expandUrl(normalizedUrl);
+      onUrlExpanded(expanded);
+      toast.success("URL unnecessarily expanded! It's completely ridiculous now!");
     } catch (error) {
-      toast.error("That doesn't look like a valid URL. Even I have standards!");
+      console.error("Error expanding URL:", error);
+      toast.error("Something went wrong while expanding your URL. Please try again.");
+    } finally {
+      setIsExpanding(false);
     }
   };
 
