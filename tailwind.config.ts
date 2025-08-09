@@ -71,6 +71,11 @@ export default {
 				'pastel-text': '#414042',
 				// Add bold blue color for header and footer
 				'bold-blue': '#1EAEDB',
+				// Dark mode colors
+				'pastel-yellow': '#FFE66D',
+				'dark-bg': '#1a1a1a',
+				'dark-surface': '#2d2d2d',
+				'dark-text': '#e0e0e0',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

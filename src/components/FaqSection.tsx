@@ -37,8 +37,8 @@ const FaqSection: React.FC = () => {
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="flex flex-col mb-10 md:mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center font-display">
-          Frequently Asked <span className="text-pastel-pink">Why</span> Questions
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center font-display dark:text-dark-text transition-colors duration-200">
+          Frequently Asked <span className="text-pastel-pink dark:text-pink-400 transition-colors duration-200">Why</span> Questions
         </h2>
       </div>
       
@@ -49,16 +49,16 @@ const FaqSection: React.FC = () => {
               <AccordionItem 
                 key={index} 
                 value={`item-${index}`} 
-                className="border-b border-gray-200 last:border-b-0"
+                className="border-b border-gray-200 dark:border-gray-700 last:border-b-0 transition-colors duration-200"
               >
-                <AccordionTrigger className="py-4 hover:no-underline">
-                  <h3 className="text-lg md:text-xl font-bold text-pastel-text mb-0 font-display text-left">
+                <AccordionTrigger className="py-4 hover:no-underline transition-colors duration-200">
+                  <h3 className="text-lg md:text-xl font-bold text-pastel-text dark:text-dark-text mb-0 font-display text-left transition-colors duration-200">
                     {item.question}
                   </h3>
                 </AccordionTrigger>
                 <AccordionContent className="pb-4">
-                  <div className="bg-gray-50 p-5 rounded-xl mt-2">
-                    <p className="text-pastel-text text-base">{item.answer}</p>
+                  <div className="bg-gray-50 dark:bg-gray-800 p-5 rounded-xl mt-2 transition-colors duration-200">
+                    <p className="text-pastel-text dark:text-dark-text text-base transition-colors duration-200">{item.answer}</p>
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -67,7 +67,7 @@ const FaqSection: React.FC = () => {
         </div>
         
         <div className="hidden lg:block lg:w-1/2">
-          <div className="bg-pastel-blue/10 p-8 rounded-xl h-full flex items-center justify-center">
+          <div className="bg-pastel-blue/10 dark:bg-blue-900/20 p-8 rounded-xl h-full flex items-center justify-center transition-colors duration-200">
             <div className="text-center space-y-4">
               <div className="mb-4">
                 <svg 
@@ -80,17 +80,17 @@ const FaqSection: React.FC = () => {
                   strokeWidth="2" 
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
-                  className="mx-auto text-pastel-blue"
+                  className="mx-auto text-pastel-blue dark:text-blue-400 transition-colors duration-200"
                 >
                   <circle cx="12" cy="12" r="10"/>
                   <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
                   <path d="M12 17h.01"/>
                 </svg>
               </div>
-              <h3 className="text-2xl font-display font-bold text-pastel-text mb-3">
+              <h3 className="text-2xl font-display font-bold text-pastel-text dark:text-dark-text mb-3 transition-colors duration-200">
                 Got More Questions?
               </h3>
-              <p className="text-pastel-text/80 text-base">
+              <p className="text-pastel-text/80 dark:text-dark-text/80 text-base transition-colors duration-200">
                 Click on any question to reveal what we think is a witty answer. The fact that you're reading this means you're already too invested in this ridiculous service.
               </p>
             </div>

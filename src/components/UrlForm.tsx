@@ -65,14 +65,14 @@ const UrlForm: React.FC<UrlFormProps> = ({ onUrlExpanded }) => {
             placeholder="Enter your boring short URL..."
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="px-4 py-6 text-base bg-white border-2 border-pastel-blue text-pastel-text rounded-xl shadow-sm focus-visible:ring-2 focus-visible:ring-pastel-blue focus-visible:ring-offset-1"
+            className="px-4 py-6 text-base bg-white dark:bg-dark-surface border-2 border-pastel-blue dark:border-blue-400 text-pastel-text dark:text-dark-text rounded-xl shadow-sm focus-visible:ring-2 focus-visible:ring-pastel-blue dark:focus-visible:ring-blue-400 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-dark-bg transition-colors duration-200"
           />
         </div>
         
         <Button 
           type="submit" 
           disabled={isExpanding}
-          className={`bg-pastel-pink hover:bg-pastel-pink/90 text-white font-bold text-base px-8 py-6 rounded-xl shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all ${isExpanding ? 'opacity-80' : ''}`}
+          className={`bg-pastel-pink dark:bg-pink-500 hover:bg-pastel-pink/90 dark:hover:bg-pink-600 text-white font-bold text-base px-8 py-6 rounded-xl shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all ${isExpanding ? 'opacity-80' : ''}`}
         >
           {isExpanding ? "EXPANDING..." : "EXPAND URL"}
         </Button>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { getUrlMapping } from '@/lib/aws';
+import { useTheme } from '@/contexts/ThemeContext';
 import { Clock, Link } from 'lucide-react';
 import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
@@ -28,6 +29,7 @@ const ExpandedUrl = () => {
   const { code } = useParams();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
   const [originalUrl, setOriginalUrl] = useState<string | null>(null);
   const [countdown, setCountdown] = useState(5);
@@ -106,9 +108,9 @@ const ExpandedUrl = () => {
   }, [isLoading, originalUrl]);
 
   return (
-    <div className="flex flex-col h-screen bg-pastel-bg text-pastel-text">
-      {/* Header consistent with main page */}
-      <header className="py-3 md:py-4 bg-white shadow-sm">
+    <div className="flex flex-col h-screen bg-pastel-bg dark:bg-dark-bg text-pastel-text dark:text-dark-text transition-colors duration-200">
+      {/* Header without theme toggle */}
+      <header className="py-3 md:py-4 bg-white dark:bg-dark-surface shadow-sm dark:shadow-gray-800 transition-colors duration-200">
         <div className="container mx-auto px-4 flex items-center justify-between">
           <h1 className="text-lg md:text-xl font-bold font-display header-title">
             <span className="text-bold-blue font-extrabold">url-</span>
@@ -120,7 +122,7 @@ const ExpandedUrl = () => {
 
       {/* Main content that takes all available space */}
       <div className="flex-1 flex items-center justify-center p-4">
-        <Card className={`w-full max-w-md mx-auto p-4 md:p-6 ${isMobile ? 'h-auto' : 'h-auto max-h-[80vh]'} flex flex-col overflow-hidden`}>
+        <Card className={`w-full max-w-md mx-auto p-4 md:p-6 ${isMobile ? 'h-auto' : 'h-auto max-h-[80vh]'} flex flex-col overflow-hidden bg-white dark:bg-dark-surface transition-colors duration-200`}>
           {isLoading ? (
             // Loading state
             <div className="flex flex-col items-center justify-center h-full space-y-4 md:space-y-6">
@@ -128,12 +130,12 @@ const ExpandedUrl = () => {
                 <div className="w-8 h-8 md:w-10 md:h-10 border-4 border-t-transparent border-pastel-blue rounded-full animate-spin"></div>
               </div>
               
-              <div className="text-sm md:text-lg font-bold font-display text-pastel-text">
+              <div className="text-sm md:text-lg font-bold font-display text-pastel-text dark:text-dark-text">
                 Processing URL...
               </div>
               
-              <div className="w-full h-2 bg-pastel-blue/20 rounded-full overflow-hidden animate-pulse">
-                <div className="h-full bg-pastel-blue animate-[slideIn_2s_ease-in-out_infinite]" style={{width: '70%'}}></div>
+              <div className="w-full h-2 bg-pastel-blue/20 dark:bg-blue-400/20 rounded-full overflow-hidden animate-pulse">
+                <div className="h-full bg-pastel-blue dark:bg-blue-400 animate-[slideIn_2s_ease-in-out_infinite]" style={{width: '70%'}}></div>
               </div>
             </div>
           ) : (
@@ -148,47 +150,33 @@ const ExpandedUrl = () => {
                   />
                 </div>
                 
-                <div className="h-10 w-10 md:h-12 md:w-12 rounded-full bg-pastel-blue/20 flex items-center justify-center mb-0 md:mb-2">
-                  <Clock className="h-6 w-6 md:h-8 md:w-8 text-pastel-pink" />
+                <div className="h-10 w-10 md:h-12 md:w-12 rounded-full bg-pastel-blue/20 dark:bg-blue-400/20 flex items-center justify-center mb-0 md:mb-2">
+                  <Clock className="h-6 w-6 md:h-8 md:w-8 text-pastel-pink dark:text-pink-400" />
                 </div>
                 
                 <div className="space-y-2 flex-grow">
-                  <div className="text-sm md:text-lg font-bold font-display text-pastel-text">
+                  <div className="text-sm md:text-lg font-bold font-display text-pastel-text dark:text-dark-text">
                     Redirecting you...
                   </div>
                   
-                  <p className="text-xs md:text-sm text-pastel-text/80">
+                  <p className="text-xs md:text-sm text-pastel-text/80 dark:text-dark-text/70">
                     {message}
                   </p>
                   
-                  <p className="text-xs md:text-sm font-bold text-pastel-pink">
+                  <p className="text-xs md:text-sm font-bold text-pastel-pink dark:text-pink-400">
                     Redirecting in {countdown} seconds...
                   </p>
                 </div>
               </div>
               
               <Progress 
-                className="w-full h-2 mt-3 md:mt-4 bg-pastel-blue/20" 
+                className="w-full h-2 mt-3 md:mt-4 bg-pastel-blue/20 dark:bg-blue-400/20" 
                 value={(countdown / 5) * 100} 
               />
             </div>
           )}
         </Card>
       </div>
-      
-      {/* Footer */}
-      <footer className="border-t border-gray-100 py-3 md:py-4 bg-pastel-bg">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <p className="text-pastel-text text-xs md:text-sm mb-1 flex items-center justify-center gap-2">
-              Built with <Link size={16} className="text-pastel-pink" /> for making URLs unnecessarily long
-            </p>
-            <p className="text-pastel-text/70 text-[10px] md:text-xs">
-              © {new Date().getFullYear()} - I don't know how to build a good website. So advise me <a href="https://github.com/nurwandi" className="text-pastel-blue hover:underline" target="_blank" rel="noopener noreferrer">here</a>
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
