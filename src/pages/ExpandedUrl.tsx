@@ -22,7 +22,7 @@ const SATIRICAL_MESSAGES = [
 ];
 
 // URL for surprise image
-const SURPRISE_IMAGE_URL = "https://surprise-for-sayang.s3.ap-southeast-2.amazonaws.com/url-extender.jpeg";
+const SURPRISE_IMAGE_URL = "https://asset-projects-905418210727.s3.ap-southeast-3.amazonaws.com/images/meme.jpg";
 
 const ExpandedUrl = () => {
   const { code } = useParams();
