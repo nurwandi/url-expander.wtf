@@ -1,5 +1,5 @@
 
-import { storeUrlMapping } from '@/lib/supabase';
+import { storeUrlMapping } from '@/lib/aws';
 
 // Generate a random string of specified length
 const generateRandomString = (length: number): string => {
@@ -77,9 +77,19 @@ export const expandUrl = async (originalUrl: string): Promise<string> => {
   const baseUrl = window.location.origin;
   const expandedPath = `/e/${expandedCode}`;
 
-  // Store the mapping in Supabase
+  // Store the mapping in AWS DynamoDB
   try {
-    await storeUrlMapping(urlToExpand, expandedCode);
+    const id = generateRandomString(16); // Generate unique ID
+    const created_at = new Date().toISOString();
+    const expires_at = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(); // 7 days from now
+    
+    await storeUrlMapping({
+      id,
+      original_url: urlToExpand,
+      expanded_code: expandedCode,
+      created_at,
+      expires_at
+    });
   } catch (error) {
     console.error("Error storing URL in database:", error);
     // Continue even if storage fails - we'll fall back to URL parsing

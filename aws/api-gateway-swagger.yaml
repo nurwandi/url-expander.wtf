@@ -1,0 +1,148 @@
+swagger: "2.0"
+info:
+  title: URL Expander API
+  version: "1.0"
+  description: API for URL Expander service
+
+host: api.url-expander.wtf
+schemes:
+  - https
+basePath: /v1
+
+paths:
+  /url-mappings:
+    post:
+      summary: Store a new URL mapping
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+              - id
+              - original_url
+              - expanded_code
+              - created_at
+              - expires_at
+            properties:
+              id:
+                type: string
+              original_url:
+                type: string
+              expanded_code:
+                type: string
+              created_at:
+                type: string
+              expires_at:
+                type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              data:
+                type: object
+        400:
+          description: Bad Request
+        500:
+          description: Internal Server Error
+      x-amazon-apigateway-integration:
+        uri: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StoreUrlMappingLambda.Arn}/invocations
+        responses:
+          default:
+            statusCode: 200
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: aws_proxy
+    options:
+      summary: CORS support
+      responses:
+        200:
+          description: Success
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: |
+            {"statusCode": 200}
+        responses:
+          default:
+            statusCode: 200
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
+
+  /url-mappings/{expanded_code}:
+    get:
+      summary: Get URL mapping by expanded code
+      produces:
+        - application/json
+      parameters:
+        - name: expanded_code
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+      x-amazon-apigateway-integration:
+        uri: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetUrlMappingLambda.Arn}/invocations
+        responses:
+          default:
+            statusCode: 200
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: aws_proxy
+    options:
+      summary: CORS support
+      parameters:
+        - name: expanded_code
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Success
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: |
+            {"statusCode": 200}
+        responses:
+          default:
+            statusCode: 200
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type'"

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { getUrlMapping } from '@/lib/supabase';
+import { getUrlMapping } from '@/lib/aws';
 import { Clock, Link } from 'lucide-react';
 import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
@@ -46,7 +46,7 @@ const ExpandedUrl = () => {
     
     const fetchUrl = async () => {
       try {
-        // First try to get the URL from Supabase
+        // First try to get the URL from AWS DynamoDB
         const mapping = await getUrlMapping(code);
         
         if (mapping && mapping.original_url) {

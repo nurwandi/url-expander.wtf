@@ -1,0 +1,26 @@
+{
+  "TableName": "url-mappings",
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "expanded_code",
+      "AttributeType": "S"
+    }
+  ],
+  "KeySchema": [
+    {
+      "AttributeName": "expanded_code",
+      "KeyType": "HASH"
+    }
+  ],
+  "BillingMode": "PAY_PER_REQUEST",
+  "Tags": [
+    {
+      "Key": "Project",
+      "Value": "url-expander"
+    },
+    {
+      "Key": "Environment",
+      "Value": "production"
+    }
+  ]
+}

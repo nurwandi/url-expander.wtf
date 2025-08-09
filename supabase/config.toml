@@ -1,5 +1,0 @@
-
-project_id = ""
-
-[functions.cleanup-expired-urls]
-verify_jwt = false
