@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from 'sonner';
 import { expandUrl } from '@/utils/urlExpander';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAuth } from '@/contexts/AuthContext';
 import { isValidUrl, normalizeUrl, isCommonInvalidInput } from '@/utils/urlValidator';
 
 interface UrlFormProps {
@@ -15,37 +16,41 @@ const UrlForm: React.FC<UrlFormProps> = ({ onUrlExpanded }) => {
   const [url, setUrl] = useState('');
   const [isExpanding, setIsExpanding] = useState(false);
   const isMobile = useIsMobile();
+  const { getAccessToken } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const trimmedUrl = url.trim();
-    
+
     if (!trimmedUrl) {
       toast.error("Hey friend! You forgot to enter a URL. I need something to work with here!");
       return;
     }
-    
+
     // Check for common invalid inputs first
     if (isCommonInvalidInput(trimmedUrl)) {
       toast.error("That doesn't look like a valid URL. Try something like 'google.com' or 'https://example.com'");
       return;
     }
-    
+
     // Validate URL format
     if (!isValidUrl(trimmedUrl)) {
       toast.error("Please enter a valid URL. Examples: google.com, https://github.com, example.org/path");
       return;
     }
-    
+
     setIsExpanding(true);
-    
+
     try {
       // Normalize the URL (add protocol if missing)
       const normalizedUrl = normalizeUrl(trimmedUrl);
-      
+
+      // Get access token if user is logged in
+      const accessToken = await getAccessToken();
+
       // Expand the URL with our service
-      const expanded = await expandUrl(normalizedUrl);
+      const expanded = await expandUrl(normalizedUrl, accessToken);
       onUrlExpanded(expanded);
       toast.success("URL unnecessarily expanded! It's completely ridiculous now!");
     } catch (error) {

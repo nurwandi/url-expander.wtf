@@ -63,16 +63,16 @@ const addSatiricalPhrases = (url: string): string => {
 };
 
 // Main function to expand a URL
-export const expandUrl = async (originalUrl: string): Promise<string> => {
+export const expandUrl = async (originalUrl: string, accessToken?: string): Promise<string> => {
   // URL should already be normalized with protocol from the form
   const urlToExpand = originalUrl;
-  
+
   // Generate a random part
   const randomPart = generateRandomString(8);
-  
+
   // Create the expanded code with satirical phrases
   const expandedCode = addSatiricalPhrases(randomPart);
-  
+
   // Build the expanded URL with the current domain
   const baseUrl = window.location.origin;
   const expandedPath = `/e/${expandedCode}`;
@@ -82,19 +82,19 @@ export const expandUrl = async (originalUrl: string): Promise<string> => {
     const id = generateRandomString(16); // Generate unique ID
     const created_at = new Date().toISOString();
     const expires_at = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(); // 7 days from now
-    
+
     await storeUrlMapping({
       id,
       original_url: urlToExpand,
       expanded_code: expandedCode,
       created_at,
       expires_at
-    });
+    }, accessToken);
   } catch (error) {
     console.error("Error storing URL in database:", error);
     // Continue even if storage fails - we'll fall back to URL parsing
   }
-  
+
   return `${baseUrl}${expandedPath}`;
 };
 
