@@ -47,20 +47,20 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ expandedUrl }) => {
   
   return (
     <div className="w-full" ref={resultRef}>
-      <Card className="overflow-hidden relative bg-white dark:bg-dark-surface rounded-xl border-none shadow-md transition-colors duration-200">
-        <div className="absolute top-0 left-0 w-full h-1 bg-pastel-blue dark:bg-blue-400 transition-colors duration-200" />
-        
-        <div className="space-y-6 p-6 md:p-8">
+      <Card className="overflow-hidden relative bg-gray-50 dark:bg-anthropic-slate-light border border-gray-200 dark:border-anthropic-cream-subtle transition-colors duration-200">
+        <div className="absolute top-0 left-0 w-full h-0.5 bg-anthropic-rust transition-colors duration-200" />
+
+        <div className="space-y-8 p-8 md:p-10">
           <div>
-            <h3 className="text-xl md:text-2xl font-display font-bold text-pastel-pink dark:text-pink-400 mb-4 transition-colors duration-200">Your Unnecessarily Long URL:</h3>
-            <div className="bg-gray-50 dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 transition-colors duration-200">
-              <p className="font-mono text-sm md:text-base text-pastel-text dark:text-dark-text break-all transition-colors duration-200">{expandedUrl}</p>
+            <h3 className="text-xl md:text-2xl font-medium text-gray-900 dark:text-anthropic-cream mb-4 transition-colors duration-200">Your Unnecessarily Long URL:</h3>
+            <div className="bg-white dark:bg-anthropic-slate-dark p-6 border border-gray-200 dark:border-anthropic-cream-subtle transition-colors duration-200">
+              <p className="font-mono text-sm md:text-base text-gray-900 dark:text-anthropic-cream break-all transition-colors duration-200">{expandedUrl}</p>
             </div>
-            
-            <div className="flex mt-5">
-              <Button 
+
+            <div className="flex mt-6">
+              <Button
                 onClick={copyToClipboard}
-                className={`${copied ? 'bg-pastel-mint dark:bg-emerald-500' : 'bg-pastel-blue dark:bg-blue-500'} text-white hover:bg-opacity-90 dark:hover:bg-opacity-80 flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 shadow-sm`}
+                className={`${copied ? 'bg-gray-900 dark:bg-anthropic-slate-dark border-gray-900 dark:border-anthropic-cream' : 'bg-anthropic-rust border-anthropic-rust'} text-white dark:text-anthropic-cream hover:bg-anthropic-rust-muted flex items-center gap-2 px-6 py-3 border transition-all duration-200`}
               >
                 {copied ? (
                   <>
@@ -74,20 +74,20 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ expandedUrl }) => {
               </Button>
             </div>
           </div>
-          
-          <div className="border-t border-gray-100 dark:border-gray-700 pt-6 transition-colors duration-200">
-            <div className="bg-gray-50 dark:bg-gray-800 p-5 rounded-xl transition-colors duration-200">
-              <p className="text-pastel-text dark:text-dark-text italic mb-0 text-sm md:text-base transition-colors duration-200">"{joke}"</p>
+
+          <div className="border-t border-gray-200 dark:border-anthropic-cream-subtle pt-8 transition-colors duration-200">
+            <div className="bg-white dark:bg-anthropic-slate-dark p-6 border border-gray-200 dark:border-anthropic-cream-subtle transition-colors duration-200">
+              <p className="text-gray-600 dark:text-anthropic-cream-muted italic mb-0 text-sm md:text-base transition-colors duration-200">"{joke}"</p>
             </div>
           </div>
-          
-          <div className="bg-pastel-pink/10 dark:bg-pink-900/20 p-5 rounded-xl transition-colors duration-200">
-            <div className="flex items-start gap-3">
-              <AlertTriangle size={isMobile ? 20 : 24} className="text-pastel-pink dark:text-pink-400 mt-1 transition-colors duration-200" />
+
+          <div className="bg-white dark:bg-anthropic-slate-medium p-6 border border-gray-200 dark:border-anthropic-cream-subtle transition-colors duration-200">
+            <div className="flex items-start gap-4">
+              <AlertTriangle size={isMobile ? 20 : 24} className="text-anthropic-rust mt-1 transition-colors duration-200" />
               <div>
-                <h4 className="text-pastel-pink dark:text-pink-400 text-lg font-medium mb-2 transition-colors duration-200">URL Expiration Notice:</h4>
-                <p className="text-pastel-text dark:text-dark-text text-sm md:text-base transition-colors duration-200">This URL will self-destruct on: <span className="font-medium">{expirationDate}</span></p>
-                <p className="text-pastel-text/70 dark:text-dark-text/70 mt-2 text-xs md:text-sm transition-colors duration-200">This URL is approximately {expandedUrl.length} characters long, which is {Math.round(expandedUrl.length / 20)} tweets worth of characters. Use responsibly.</p>
+                <h4 className="text-anthropic-rust text-lg font-medium mb-2 transition-colors duration-200">URL Expiration Notice:</h4>
+                <p className="text-gray-900 dark:text-anthropic-cream text-sm md:text-base transition-colors duration-200">This URL will self-destruct on: <span className="font-medium">{expirationDate}</span></p>
+                <p className="text-gray-600 dark:text-anthropic-cream-muted mt-2 text-xs md:text-sm transition-colors duration-200">This URL is approximately {expandedUrl.length} characters long, which is {Math.round(expandedUrl.length / 20)} tweets worth of characters. Use responsibly.</p>
               </div>
             </div>
           </div>

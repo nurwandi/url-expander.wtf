@@ -65,16 +65,16 @@ const UrlForm: React.FC<UrlFormProps> = ({ onUrlExpanded }) => {
             placeholder="Enter your boring short URL..."
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="px-4 py-6 text-base bg-white dark:bg-dark-surface border-2 border-pastel-blue dark:border-blue-400 text-pastel-text dark:text-dark-text rounded-xl shadow-sm focus-visible:ring-2 focus-visible:ring-pastel-blue dark:focus-visible:ring-blue-400 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-dark-bg transition-colors duration-200"
+            className="px-5 py-6 text-base bg-white dark:bg-anthropic-slate-light border border-gray-300 dark:border-anthropic-cream-subtle text-gray-900 dark:text-anthropic-cream placeholder:text-gray-500 dark:placeholder:text-anthropic-cream-muted focus-visible:ring-1 focus-visible:ring-anthropic-rust focus-visible:border-anthropic-rust transition-all duration-200"
           />
         </div>
-        
-        <Button 
-          type="submit" 
+
+        <Button
+          type="submit"
           disabled={isExpanding}
-          className={`bg-pastel-pink dark:bg-pink-500 hover:bg-pastel-pink/90 dark:hover:bg-pink-600 text-white font-bold text-base px-8 py-6 rounded-xl shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all ${isExpanding ? 'opacity-80' : ''}`}
+          className={`bg-anthropic-rust hover:bg-anthropic-rust-muted text-white dark:text-anthropic-cream font-medium text-base px-8 py-6 border border-anthropic-rust hover:border-anthropic-rust-muted transition-all duration-200 ${isExpanding ? 'opacity-70' : ''}`}
         >
-          {isExpanding ? "EXPANDING..." : "EXPAND URL"}
+          {isExpanding ? "Expanding..." : "Expand URL"}
         </Button>
       </div>
     </form>
