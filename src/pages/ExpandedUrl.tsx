@@ -108,75 +108,80 @@ const ExpandedUrl = () => {
   }, [isLoading, originalUrl]);
 
   return (
-    <div className="flex flex-col h-screen bg-pastel-bg dark:bg-dark-bg text-pastel-text dark:text-dark-text transition-colors duration-200">
-      {/* Header without theme toggle */}
-      <header className="py-3 md:py-4 bg-white dark:bg-dark-surface shadow-sm dark:shadow-gray-800 transition-colors duration-200">
-        <div className="container mx-auto px-4 flex items-center justify-between">
-          <h1 className="text-lg md:text-xl font-bold font-display header-title">
-            <span className="text-bold-blue font-extrabold">url-</span>
-            <span className="text-pastel-pink">expander</span>
-            <span className="text-bold-blue font-extrabold">.wtf</span>
+    <div className="min-h-screen bg-the-frick-bg text-the-frick-text flex flex-col">
+      {/* Header - matching landing page */}
+      <header className="py-3 md:py-6 bg-the-frick-bg/80 backdrop-blur-md border-b border-the-frick-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+          <h1 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold font-display">
+            <span className="text-the-frick-text">url-expander</span>
+            <span className="text-the-frick-rust">.wtf</span>
           </h1>
         </div>
       </header>
 
-      {/* Main content that takes all available space */}
-      <div className="flex-1 flex items-center justify-center p-4">
-        <Card className={`w-full max-w-md mx-auto p-4 md:p-6 ${isMobile ? 'h-auto' : 'h-auto max-h-[80vh]'} flex flex-col overflow-hidden bg-white dark:bg-dark-surface transition-colors duration-200`}>
-          {isLoading ? (
-            // Loading state
-            <div className="flex flex-col items-center justify-center h-full space-y-4 md:space-y-6">
-              <div className="h-12 w-12 md:h-16 md:w-16 rounded-full bg-pastel-blue/20 flex items-center justify-center mb-2">
-                <div className="w-8 h-8 md:w-10 md:h-10 border-4 border-t-transparent border-pastel-blue rounded-full animate-spin"></div>
+      {/* Main content */}
+      <main className="flex-1 flex items-center justify-center w-full py-6 md:py-8">
+        <div className="max-w-2xl mx-auto px-6 sm:px-8 md:px-12 w-full">
+          <div className="bg-[#E8DCC8] rounded-xl md:rounded-2xl lg:rounded-3xl p-8 sm:p-10 md:p-12">
+            {isLoading ? (
+              // Loading state
+              <div className="flex flex-col items-center justify-center space-y-4 sm:space-y-6 py-4 sm:py-8">
+                <div className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 rounded-full bg-the-frick-rust/20 flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border-3 sm:border-4 border-t-transparent border-the-frick-rust rounded-full animate-spin"></div>
+                </div>
+
+                <div className="text-lg sm:text-xl md:text-2xl font-bold font-display text-[#1A1A1A]">
+                  Processing URL...
+                </div>
+
+                <div className="w-full max-w-md h-2 bg-the-frick-rust/20 rounded-full overflow-hidden">
+                  <div className="h-full bg-the-frick-rust animate-pulse" style={{width: '70%'}}></div>
+                </div>
               </div>
-              
-              <div className="text-sm md:text-lg font-bold font-display text-pastel-text dark:text-dark-text">
-                Processing URL...
-              </div>
-              
-              <div className="w-full h-2 bg-pastel-blue/20 dark:bg-blue-400/20 rounded-full overflow-hidden animate-pulse">
-                <div className="h-full bg-pastel-blue dark:bg-blue-400 animate-[slideIn_2s_ease-in-out_infinite]" style={{width: '70%'}}></div>
-              </div>
-            </div>
-          ) : (
-            // Redirect state
-            <div className="flex flex-col items-center justify-between h-full">
-              <div className="flex flex-col items-center text-center space-y-3 md:space-y-4 w-full">
-                <div className="overflow-hidden rounded-lg w-full max-h-[40vh] flex-shrink-0">
-                  <img 
-                    src={SURPRISE_IMAGE_URL} 
-                    alt="Surprise!" 
+            ) : (
+              // Redirect state
+              <div className="flex flex-col items-center space-y-4 sm:space-y-5 md:space-y-6">
+                <div className="overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl w-full max-w-xs sm:max-w-sm md:max-w-md">
+                  <img
+                    src={SURPRISE_IMAGE_URL}
+                    alt="Surprise!"
                     className="w-full h-auto object-cover"
                   />
                 </div>
-                
-                <div className="h-10 w-10 md:h-12 md:w-12 rounded-full bg-pastel-blue/20 dark:bg-blue-400/20 flex items-center justify-center mb-0 md:mb-2">
-                  <Clock className="h-6 w-6 md:h-8 md:w-8 text-pastel-pink dark:text-pink-400" />
-                </div>
-                
-                <div className="space-y-2 flex-grow">
-                  <div className="text-sm md:text-lg font-bold font-display text-pastel-text dark:text-dark-text">
-                    Redirecting you...
+
+                <div className="flex flex-col items-center text-center space-y-3 sm:space-y-4 md:space-y-5 w-full">
+                  <div className="h-12 w-12 sm:h-13 sm:w-13 md:h-14 md:w-14 rounded-full bg-the-frick-rust/20 flex items-center justify-center">
+                    <Clock className="h-6 w-6 sm:h-6 sm:w-6 md:h-7 md:w-7 text-the-frick-rust" />
                   </div>
-                  
-                  <p className="text-xs md:text-sm text-pastel-text/80 dark:text-dark-text/70">
-                    {message}
-                  </p>
-                  
-                  <p className="text-xs md:text-sm font-bold text-pastel-pink dark:text-pink-400">
-                    Redirecting in {countdown} seconds...
-                  </p>
+
+                  <div className="space-y-2 sm:space-y-2.5 md:space-y-3">
+                    <div className="text-xl sm:text-2xl md:text-3xl font-bold font-display text-[#1A1A1A] leading-tight">
+                      Redirecting you...
+                    </div>
+
+                    <p className="text-xs sm:text-sm md:text-base text-[#1A1A1A]/70 max-w-md mx-auto leading-relaxed px-2 sm:px-4">
+                      {message}
+                    </p>
+
+                    <p className="text-sm sm:text-base md:text-lg font-bold text-the-frick-rust pt-1 sm:pt-2">
+                      Redirecting in {countdown} seconds...
+                    </p>
+                  </div>
+
+                  <div className="w-full max-w-sm sm:max-w-md mt-2 sm:mt-3 md:mt-4">
+                    <div className="w-full h-2 bg-[#1A1A1A]/20 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-the-frick-rust transition-all duration-1000 ease-linear"
+                        style={{width: `${(5 - countdown) / 5 * 100}%`}}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-              
-              <Progress 
-                className="w-full h-2 mt-3 md:mt-4 bg-pastel-blue/20 dark:bg-blue-400/20" 
-                value={(countdown / 5) * 100} 
-              />
-            </div>
-          )}
-        </Card>
-      </div>
+            )}
+          </div>
+        </div>
+      </main>
     </div>
   );
 };

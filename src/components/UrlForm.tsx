@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from 'sonner';
 import { expandUrl } from '@/utils/urlExpander';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAuth } from '@/contexts/AuthContext';
 import { isValidUrl, normalizeUrl, isCommonInvalidInput } from '@/utils/urlValidator';
 
 interface UrlFormProps {
@@ -15,37 +16,41 @@ const UrlForm: React.FC<UrlFormProps> = ({ onUrlExpanded }) => {
   const [url, setUrl] = useState('');
   const [isExpanding, setIsExpanding] = useState(false);
   const isMobile = useIsMobile();
+  const { getAccessToken } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const trimmedUrl = url.trim();
-    
+
     if (!trimmedUrl) {
       toast.error("Hey friend! You forgot to enter a URL. I need something to work with here!");
       return;
     }
-    
+
     // Check for common invalid inputs first
     if (isCommonInvalidInput(trimmedUrl)) {
       toast.error("That doesn't look like a valid URL. Try something like 'google.com' or 'https://example.com'");
       return;
     }
-    
+
     // Validate URL format
     if (!isValidUrl(trimmedUrl)) {
       toast.error("Please enter a valid URL. Examples: google.com, https://github.com, example.org/path");
       return;
     }
-    
+
     setIsExpanding(true);
-    
+
     try {
       // Normalize the URL (add protocol if missing)
       const normalizedUrl = normalizeUrl(trimmedUrl);
-      
+
+      // Get access token if user is logged in
+      const accessToken = await getAccessToken();
+
       // Expand the URL with our service
-      const expanded = await expandUrl(normalizedUrl);
+      const expanded = await expandUrl(normalizedUrl, accessToken);
       onUrlExpanded(expanded);
       toast.success("URL unnecessarily expanded! It's completely ridiculous now!");
     } catch (error) {
@@ -65,16 +70,16 @@ const UrlForm: React.FC<UrlFormProps> = ({ onUrlExpanded }) => {
             placeholder="Enter your boring short URL..."
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="px-4 py-6 text-base bg-white dark:bg-dark-surface border-2 border-pastel-blue dark:border-blue-400 text-pastel-text dark:text-dark-text rounded-xl shadow-sm focus-visible:ring-2 focus-visible:ring-pastel-blue dark:focus-visible:ring-blue-400 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-dark-bg transition-colors duration-200"
+            className="px-5 py-6 text-base bg-white dark:bg-the-frick-slate-light border border-gray-300 dark:border-the-frick-cream-subtle text-gray-900 dark:text-the-frick-cream placeholder:text-gray-500 dark:placeholder:text-the-frick-cream-muted focus-visible:ring-1 focus-visible:ring-the-frick-rust focus-visible:border-the-frick-rust transition-all duration-200"
           />
         </div>
-        
-        <Button 
-          type="submit" 
+
+        <Button
+          type="submit"
           disabled={isExpanding}
-          className={`bg-pastel-pink dark:bg-pink-500 hover:bg-pastel-pink/90 dark:hover:bg-pink-600 text-white font-bold text-base px-8 py-6 rounded-xl shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all ${isExpanding ? 'opacity-80' : ''}`}
+          className={`bg-the-frick-rust hover:bg-the-frick-rust-muted text-white dark:text-the-frick-cream font-medium text-base px-8 py-6 border border-the-frick-rust hover:border-the-frick-rust-muted transition-all duration-200 ${isExpanding ? 'opacity-70' : ''}`}
         >
-          {isExpanding ? "EXPANDING..." : "EXPAND URL"}
+          {isExpanding ? "Expanding..." : "Expand URL"}
         </Button>
       </div>
     </form>

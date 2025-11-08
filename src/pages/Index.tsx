@@ -1,113 +1,188 @@
 
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import HeroSection from '@/components/HeroSection';
 import UrlForm from '@/components/UrlForm';
 import ResultDisplay from '@/components/ResultDisplay';
 import FaqSection from '@/components/FaqSection';
-import { Button } from '@/components/ui/button';
-import { Github, Coffee } from 'lucide-react';
+import { Coffee, User, LogOut, LayoutDashboard, ChevronDown, ExternalLink } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const Index = () => {
   const [expandedUrl, setExpandedUrl] = useState('');
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const isMobile = useIsMobile();
   const resultSectionRef = useRef<HTMLDivElement>(null);
-  
+  const heroSectionRef = useRef<HTMLDivElement>(null);
+  const { user, isAuthenticated, login, logout } = useAuth();
+
   const handleUrlExpanded = (url: string) => {
     setExpandedUrl(url);
     // We'll let the ResultDisplay component handle the scroll
   };
+
+  // Track mouse movement for parallax effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (heroSectionRef.current) {
+        const rect = heroSectionRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+        const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+        setMousePosition({ x, y });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
   
   return (
-    <div className="min-h-screen bg-pastel-bg dark:bg-dark-bg text-pastel-text dark:text-dark-text transition-colors duration-200">
-      {/* Header with clean design */}
-      <header className="py-4 md:py-5 sticky top-0 z-40 bg-white dark:bg-dark-surface shadow-sm dark:shadow-gray-800 transition-colors duration-200">
-        <div className="container mx-auto px-4 flex items-center justify-between">
-          <h1 className="text-lg md:text-xl font-bold font-display header-title">
-            <span className="text-bold-blue font-extrabold">url-</span>
-            <span className="text-pastel-pink">expander</span>
-            <span className="text-bold-blue font-extrabold">.wtf</span>
-          </h1>
-          
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="flex items-center gap-2 bg-white dark:bg-dark-surface border border-gray-200 dark:border-gray-700 text-pastel-text dark:text-dark-text hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
-            onClick={() => window.open('https://github.com/nurwandi/url-expander.wtf', '_blank')}
-          >
-            <Github size={isMobile ? 16 : 18} />
-            {!isMobile && <span>Fork on <span className="font-bold">GitHub</span></span>}
-          </Button>
+    <div className="min-h-screen bg-the-frick-bg text-the-frick-text">
+      {/* Header - Clean and minimal like Modern */}
+      <header className="py-4 md:py-6 sticky top-0 z-40 bg-the-frick-bg/80 backdrop-blur-md border-b border-the-frick-border">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+          <Link to="/">
+            <h1 className="text-xl md:text-2xl font-bold font-display cursor-pointer hover:opacity-80 transition-opacity">
+              <span className="text-the-frick-text">url-expander</span>
+              <span className="text-the-frick-rust">.wtf</span>
+            </h1>
+          </Link>
+
+          {/* Auth buttons - Modern inspired */}
+          {!isAuthenticated ? (
+            <Button
+              onClick={login}
+              className="bg-[#1A1A1A] text-white hover:bg-[#2A2A2A] rounded-full px-6 py-2.5 font-medium transition-all shadow-sm border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+            >
+              Sign in
+            </Button>
+          ) : (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  className="bg-[#1A1A1A] text-white hover:bg-[#2A2A2A] rounded-full px-6 py-2.5 font-medium transition-all shadow-sm flex items-center gap-2 group border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                >
+                  <span>{user?.name?.split(' ')[0] || user?.email?.split('@')[0] || 'Account'}</span>
+                  <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="min-w-[200px] w-auto max-w-[300px] bg-white rounded-2xl border-none shadow-2xl p-2 mt-2">
+                <DropdownMenuLabel className="text-the-frick-text-muted font-normal px-3 py-2 text-sm truncate">
+                  {user?.email}
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-[#E8DCC8] my-2" />
+                <DropdownMenuItem asChild className="focus:bg-transparent hover:bg-transparent">
+                  <Link to="/dashboard" className="cursor-pointer px-3 py-3 transition-all">
+                    <span className="font-medium text-the-frick-text text-base hover:underline underline-offset-4">My URLs</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-[#E8DCC8] my-2" />
+                <DropdownMenuItem onClick={logout} className="cursor-pointer px-3 py-3 focus:bg-transparent hover:bg-transparent transition-all">
+                  <span className="font-medium text-the-frick-text text-base hover:underline underline-offset-4">Sign out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
       </header>
 
       {/* Main content with clean styling */}
       <main>
-        <div className="flex flex-col items-center">
-          {/* Hero section */}
-          <div className="w-full pt-12 md:pt-24 pb-12 md:pb-20 container mx-auto px-4">
+        {/* Hero section with custom SVG backgrounds - Very generous spacing like Modern */}
+        <section ref={heroSectionRef} className="w-full py-16 md:py-24 lg:py-32 relative overflow-hidden">
+          {/* Right background - Frame 2 (1).png with mouse tracking (pushed to right and down) */}
+          <div
+            className="absolute inset-0 overflow-visible pointer-events-none bg-[length:120%] bg-no-repeat opacity-10 transition-transform duration-300 ease-out"
+            style={{
+              backgroundImage: 'url(/hero-background-right.png)',
+              backgroundPosition: '-190% -30%',
+              transform: `translate(${mousePosition.x * 30}px, ${mousePosition.y * 30}px)`,
+            }}
+          />
+          {/* Left background - Frame 2 with mouse tracking (opposite direction, pushed to left) */}
+          <div
+            className="absolute inset-0 overflow-visible pointer-events-none bg-[length:90%] bg-no-repeat opacity-20 transition-transform duration-300 ease-out"
+            style={{
+              backgroundImage: 'url(/hero-background-left.png)',
+              backgroundPosition: '-330% center',
+              transform: `translate(${mousePosition.x * -25}px, ${mousePosition.y * -25}px)`,
+            }}
+          />
+          <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
             <HeroSection />
           </div>
-          
-          {/* URL Input Form */}
-          <div className="w-full py-16 md:py-24 bg-pastel-blue/10 dark:bg-pastel-blue/5 url-form-section transition-colors duration-200">            
-            <div className="container mx-auto px-4 md:px-6">
-              <div className="mb-10 md:mb-12 text-center">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 font-display">Enter Your URL Below</h2>
-                <p className="text-base md:text-lg text-pastel-text/80 dark:text-dark-text/70 max-w-2xl mx-auto">And watch as we transform it into something unwieldy and ridiculously long</p>
-              </div>
-              
-              <div className="w-full max-w-3xl mx-auto">
-                <UrlForm onUrlExpanded={handleUrlExpanded} />
-              </div>
-            </div>
-          </div>
-          
-          {/* Results Display (conditionally rendered) */}
-          {expandedUrl && (
-            <div className="w-full py-16 md:py-24 bg-white dark:bg-dark-bg transition-colors duration-200" ref={resultSectionRef}>
-              <div className="container mx-auto px-4">
-                <div className="w-full max-w-3xl mx-auto">
-                  <ResultDisplay expandedUrl={expandedUrl} />
+        </section>
+
+        {/* URL Input Form Section with Expiration Info */}
+        <section className="w-full py-16 md:py-24">
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <div className="bg-[#E8DCC8] rounded-[2rem] p-10 md:p-14">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+                {/* Left side - Form */}
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-[#1A1A1A] leading-tight">
+                    Enter Your URL
+                  </h2>
+                  <p className="text-base md:text-lg text-[#1A1A1A]/70 leading-relaxed mb-6">
+                    Transform it into something unwieldy and ridiculously long.
+                  </p>
+                  <UrlForm onUrlExpanded={handleUrlExpanded} />
+                </div>
+
+                {/* Right side - Additional Info */}
+                <div className="lg:border-l lg:border-[#1A1A1A]/15 lg:pl-12 lg:flex lg:items-center">
+                  <div className="space-y-4 lg:px-8">
+                    <p className="text-sm md:text-base text-[#1A1A1A]/80 leading-relaxed">
+                      Your extended link is only valid for 7 days, cause I don't wanna pay for more storage!
+                    </p>
+                    <p className="text-sm md:text-base text-[#1A1A1A]/80 leading-relaxed">
+                      Use it while it lasts. After expiration, the link will be permanently deleted and you'll need to create a new one.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        </section>
           
-          {/* Satirical Information Section */}
-          <div className="w-full py-16 md:py-24 bg-pastel-pink/10 dark:bg-pastel-pink/5 transition-colors duration-200">
-            <div className="container mx-auto px-4 md:px-6 max-w-3xl">
-              <div className="bg-white dark:bg-dark-surface p-8 flex flex-col items-center text-center space-y-4 rounded-xl shadow-sm dark:shadow-gray-800 transition-colors duration-200">
-                <div className="h-16 w-16 rounded-full bg-pastel-blue/20 flex items-center justify-center mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-pastel-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold font-display text-pastel-text dark:text-dark-text">Your Link Will Expire</h3>
-                <p className="text-pastel-text/80 dark:text-dark-text/70">Your extended link only valid for 7 days, cause I don't wanna pay for more storage!</p>
+        {/* Results Display (conditionally rendered) */}
+        {expandedUrl && (
+          <section className="w-full py-16 md:py-24" ref={resultSectionRef}>
+            <div className="max-w-7xl mx-auto px-6 md:px-12">
+              <div className="max-w-4xl mx-auto">
+                <ResultDisplay expandedUrl={expandedUrl} />
               </div>
             </div>
+          </section>
+        )}
+
+        {/* FAQ Section */}
+        <section className="w-full py-16 md:py-24 lg:py-32">
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <FaqSection />
           </div>
-          
-          {/* FAQ Section */}
-          <div className="w-full py-16 md:py-24 bg-white dark:bg-dark-bg transition-colors duration-200">
-            <div className="container mx-auto px-4 md:px-6">
-              <FaqSection />
-            </div>
-          </div>
-        </div>
+        </section>
       </main>
-      
-      {/* Footer */}
-      <footer className="border-t border-gray-100 dark:border-gray-800 py-8 md:py-12 bg-pastel-bg dark:bg-dark-surface transition-colors duration-200">
-        <div className="container mx-auto px-4">
+
+      {/* Footer - Clean like Modern */}
+      <footer className="border-t border-the-frick-border py-12 md:py-16 bg-the-frick-bg">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="text-center">
-            <p className="text-pastel-text dark:text-dark-text mb-1 flex items-center justify-center gap-2">
-              Built with <Coffee size={18} className="text-pastel-pink" /> and with no single purpose
+            <p className="text-the-frick-text mb-2 flex items-center justify-center gap-2 text-base">
+              Built with <Coffee size={18} className="text-the-frick-rust" /> and with no single purpose
             </p>
-            <p className="text-pastel-text/70 dark:text-dark-text/60 text-sm">
-              © {new Date().getFullYear()} - I don't know how to build a good website. So advise me <a href="https://github.com/nurwandi" className="text-pastel-blue dark:text-pastel-yellow hover:underline" target="_blank" rel="noopener noreferrer">here</a>
+            <p className="text-the-frick-text-muted text-sm">
+              © {new Date().getFullYear()} - I don't know how to build a good website. So advise me <a href="https://github.com/nurwandi" className="text-the-frick-rust hover:underline transition-colors" target="_blank" rel="noopener noreferrer">here</a>
             </p>
           </div>
         </div>

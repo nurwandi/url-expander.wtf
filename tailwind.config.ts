@@ -63,19 +63,18 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Updated pastel colors inspired by Penny Chat
-				'pastel-blue': '#84D1ED',
-				'pastel-pink': '#FF7FB9',
-				'pastel-mint': '#A1DDCA',
-				'pastel-bg': '#FFFFFF',
-				'pastel-text': '#414042',
-				// Add bold blue color for header and footer
-				'bold-blue': '#1EAEDB',
-				// Dark mode colors
-				'pastel-yellow': '#FFE66D',
-				'dark-bg': '#1a1a1a',
-				'dark-surface': '#2d2d2d',
-				'dark-text': '#e0e0e0',
+				// The Frick color palette (beige/cream theme)
+				'the-frick': {
+					'bg': '#F4EFE6',              // Main background (warm beige)
+					'surface': '#EBE4D8',         // Card/surface (darker beige)
+					'card-beige': '#E8DCC8',      // Card variant 1
+					'card-mint': '#C8DDD3',       // Card variant 2 (mint)
+					'card-lavender': '#D5D3E8',   // Card variant 3 (lavender)
+					'rust': '#CC7A63',            // Primary accent (terracotta/rust)
+					'text': '#1A1A1A',            // Primary text (almost black)
+					'text-muted': '#666666',      // Secondary text
+					'border': '#D4C9BA',          // Borders
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -112,8 +111,10 @@ export default {
 					'50%': { transform: 'translateY(-10px)' },
 				},
 				'float': {
-					'0%, 100%': { transform: 'translateY(0)' },
-					'50%': { transform: 'translateY(-15px)' },
+					'0%, 100%': { transform: 'translate(0, 0)' },
+					'25%': { transform: 'translate(10px, -10px)' },
+					'50%': { transform: 'translate(0, -5px)' },
+					'75%': { transform: 'translate(-10px, -10px)' },
 				},
 				'slide-in': {
 					'0%': { transform: 'translateY(20px)', opacity: '0' },
@@ -126,12 +127,22 @@ export default {
 				'wiggle': 'wiggle 1s ease-in-out infinite',
 				'pulse-hard': 'pulse-hard 2s ease-in-out infinite',
 				'bounce-slight': 'bounce-slight 2s ease-in-out infinite',
-				'float': 'float 6s ease-in-out infinite',
+				'float': 'float 3s ease-in-out infinite',
 				'slide-in': 'slide-in 0.6s ease-out forwards',
 			},
 			fontFamily: {
-				'sans': ['DM Sans', 'Inter', 'sans-serif'],
-				'display': ['Archivo', 'Plus Jakarta Sans', 'sans-serif'],
+				'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+				'display': ['ABC Diatype', 'Inter', 'system-ui', 'sans-serif'],
+			},
+			fontSize: {
+				'display-xs': 'clamp(1.125rem, 1.087rem + 0.163vw, 1.25rem)',
+				'display-m': 'clamp(1.75rem, 1.673rem + 0.326vw, 2rem)',
+				'display-l': 'clamp(2rem, 1.694rem + 1.306vw, 3rem)',
+				'display-xl': 'clamp(2.5rem, 2.041rem + 1.959vw, 4rem)',
+				'display-xxl': 'clamp(3rem, 2.388rem + 2.612vw, 5rem)',
+			},
+			spacing: {
+				'site-margin': 'clamp(2rem, 1.082rem + 3.918vw, 5rem)',
 			},
 		}
 	},
