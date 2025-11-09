@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ExternalLink } from 'lucide-react';
 
 const RedirectHandler = () => {
   const location = useLocation();
   const [error, setError] = useState<string | null>(null);
+  const [redirectInfo, setRedirectInfo] = useState<{ url: string; countdown: number } | null>(null);
 
   useEffect(() => {
     const fetchAndRedirect = async () => {
@@ -52,10 +53,10 @@ const RedirectHandler = () => {
           return;
         }
 
-        console.log('[REDIRECT] Redirecting to:', originalUrl);
+        console.log('[REDIRECT] Will redirect to:', originalUrl);
 
-        // Redirect to original URL
-        window.location.href = originalUrl;
+        // Show redirect page with countdown
+        setRedirectInfo({ url: originalUrl, countdown: 3 });
       } catch (err) {
         console.error('[REDIRECT] Error:', err);
         setError('An error occurred while redirecting');
@@ -64,6 +65,28 @@ const RedirectHandler = () => {
 
     fetchAndRedirect();
   }, [location]);
+
+  // Countdown and redirect effect
+  useEffect(() => {
+    if (!redirectInfo) return;
+
+    // Increment click count when redirect page is shown
+    const code = location.pathname.slice(1);
+    fetch(`https://e4lqku9uee.execute-api.ap-southeast-3.amazonaws.com/v1/url-mappings/${code}/click`, {
+      method: 'POST'
+    }).catch(err => console.error('[REDIRECT] Failed to increment click count:', err));
+
+    // Countdown timer
+    if (redirectInfo.countdown > 0) {
+      const timer = setTimeout(() => {
+        setRedirectInfo({ ...redirectInfo, countdown: redirectInfo.countdown - 1 });
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else {
+      // Redirect when countdown reaches 0
+      window.location.href = redirectInfo.url;
+    }
+  }, [redirectInfo]);
 
   if (error) {
     return (
@@ -84,11 +107,56 @@ const RedirectHandler = () => {
     );
   }
 
+  // Show redirect page with countdown
+  if (redirectInfo) {
+    return (
+      <div className="min-h-screen bg-the-frick-bg flex items-center justify-center px-6">
+        <div className="max-w-2xl w-full text-center">
+          <div className="bg-[#E8DCC8] rounded-3xl p-8 md:p-12">
+            <h1 className="text-4xl md:text-5xl font-bold font-display text-the-frick-text mb-6">
+              Redirecting...
+            </h1>
+
+            <div className="flex items-center justify-center mb-8">
+              <div className="text-6xl md:text-8xl font-bold text-the-frick-rust">
+                {redirectInfo.countdown}
+              </div>
+            </div>
+
+            <p className="text-lg text-the-frick-text-muted mb-6">
+              You will be redirected to:
+            </p>
+
+            <div className="bg-white/50 p-4 rounded-lg mb-8">
+              <a
+                href={redirectInfo.url}
+                className="text-the-frick-rust hover:underline break-all text-sm md:text-base"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {redirectInfo.url}
+              </a>
+            </div>
+
+            <button
+              onClick={() => window.location.href = redirectInfo.url}
+              className="inline-flex items-center gap-2 bg-the-frick-rust text-white px-6 py-3 rounded-full hover:opacity-90 transition-opacity font-medium"
+            >
+              <span>Go Now</span>
+              <ExternalLink className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Loading state
   return (
     <div className="min-h-screen bg-the-frick-bg flex items-center justify-center">
       <div className="text-center">
         <Loader2 className="h-12 w-12 animate-spin text-the-frick-rust mx-auto mb-4" />
-        <p className="text-the-frick-text-muted">Redirecting...</p>
+        <p className="text-the-frick-text-muted">Loading...</p>
       </div>
     </div>
   );
