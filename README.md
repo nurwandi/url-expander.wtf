@@ -1,5 +1,10 @@
 # url-expander.wtf
 
+![AWS](https://img.shields.io/badge/AWS-Serverless-FF9900?logo=amazonaws&logoColor=white)
+![Usefulness](https://img.shields.io/badge/Usefulness-Questionable-ff1744)
+![Productivity](https://img.shields.io/badge/Productivity-Negative-d500f9)
+![Coffee](https://img.shields.io/badge/Powered_by-Coffee_%26_Chaos-5d4037)
+
 The most needlessly overengineered way to make your links *worse*.
 
 ## What is this?
@@ -24,14 +29,17 @@ Some of us are driven by chaos, caffeine, and a desire to see how far we can pus
 | Layer           | Tool                              |
 |-----------------|-----------------------------------|
 | Frontend        | React + Vite + TypeScript         |
-| Styling         | Tailwind CSS                      |
+| Styling         | Tailwind CSS + shadcn/ui          |
 | Authentication  | AWS Cognito + Google OAuth        |
 | Backend         | AWS Lambda (Node.js 20)           |
 | Database        | DynamoDB (with GSI & TTL)         |
 | API             | AWS API Gateway (REST)            |
 | Hosting         | S3 + CloudFront (w/ OAC)          |
+| Logging         | CloudFront Standard Logs v2       |
+| Analytics       | AWS Athena (SQL on S3 logs)       |
 | DNS             | Route 53                          |
 | SSL/TLS         | ACM (AWS Certificate Manager)     |
+| CI/CD           | GitHub Actions                    |
 | Domain          | Yes, it's a .wtf                  |
 
 
@@ -39,14 +47,19 @@ Some of us are driven by chaos, caffeine, and a desire to see how far we can pus
 
 - 🔗 **Transform short URLs into absurdly long ones** - Because efficiency is overrated
 - 👤 **User Authentication** - Login with Google to track your URLs
-- 📊 **Personal Dashboard** - View all your ridiculously expanded URLs
+- 📊 **Personal Dashboard** - View all your ridiculously expanded URLs with click counts
 - ⏰ **Auto-expire links after 7 days** - DynamoDB TTL keeps things tidy
-- 🎭 **Satirical redirect messages** - Complete with surprise images
-- 🎨 **Anthropic-inspired UI** - Clean, minimal design with warm beige aesthetics
+- 🎯 **Click Tracking** - Monitor how many people click your expanded URLs
+- 📈 **Analytics Dashboard** - AWS Athena queries for traffic insights (country, device, browser)
+- 🔒 **Security Monitoring** - Detect bots, SQL injection attempts, and suspicious traffic
+- 🎭 **Redirect Page with Countdown** - 3-2-1 countdown before redirecting
+- 🎨 **Beautiful UI** - Clean, minimal design with warm beige aesthetics (inspired by Anthropic)
+- 🌙 **Dark Mode** - Because it's 2025
 - 🌙 **Anonymous mode** - Generate URLs without login (no tracking)
 - 🚀 **Serverless architecture** - Scales to infinity (or your AWS bill limit)
-- 💸 **Pay-per-use pricing** - Almost free for low traffic
+- 💸 **Pay-per-use pricing** - Almost free for low traffic (~$0.01/month)
 - 📱 **Mobile responsive** - Works beautifully on all devices
+- ♻️ **Auto-delete old logs** - S3 lifecycle policy deletes logs > 30 days
 
 ## How It Works
 
@@ -100,6 +113,20 @@ Just try it already here:
 │  • GSI: user-id-index (query URLs by user)                  │
 │  • TTL: Auto-delete after 7 days                            │
 └─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│              Observability & Analytics                      │
+│  CloudFront Standard Logs v2 → S3                           │
+│  • Prefix: cloudfront/                                      │
+│  • Lifecycle: Auto-delete logs > 30 days                    │
+│  • Format: W3C (tab-delimited)                              │
+│                                                             │
+│  AWS Athena (SQL on S3)                                     │
+│  • Database: cloudfront_url_expander_logs                   │
+│  • 13+ saved queries (security, performance, analytics)     │
+│  • Monitor: traffic, bots, performance, geo-location        │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ## API Endpoints
@@ -111,33 +138,6 @@ Just try it already here:
 ### Protected Endpoints (requires authentication)
 - `GET /users/me/urls` - Get all URLs created by authenticated user
 
-## Development
-
-### Prerequisites
-- Node.js 20+
-- AWS CLI configured
-- Access to AWS account with appropriate permissions
-
-### Local Development
-
-```bash
-# Install dependencies
-npm install
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your API Gateway URL
-
-# Run development server
-npm run dev
-```
-
-### Environment Variables
-
-```env
-VITE_API_GATEWAY_URL=https://your-api-gateway-url/v1
-```
-
 ## Deployment
 
 The application uses AWS serverless infrastructure:
@@ -148,15 +148,6 @@ The application uses AWS serverless infrastructure:
 4. **Authentication**: Cognito User Pool with Google OAuth
 
 All infrastructure is pay-per-use with generous free tier coverage.
-
-## Security Features
-
-- ✅ CORS properly configured
-- ✅ HTTPS enforced via CloudFront
-- ✅ JWT token validation
-- ✅ No credentials stored in frontend
-- ✅ User data isolated via GSI queries
-- ✅ Automatic token refresh via AWS Amplify
 
 ## Contributing
 

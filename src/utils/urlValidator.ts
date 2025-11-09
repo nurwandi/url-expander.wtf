@@ -10,10 +10,10 @@ export const isValidUrl = (urlString: string): boolean => {
   }
 
   // URL regex pattern for validation
-  const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i;
-  
+  const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/i;
+
   // Domain pattern for inputs without protocol
-  const domainPattern = /^([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i;
+  const domainPattern = /^([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/i;
 
   // Check if it has a protocol
   const hasProtocol = /^https?:\/\//i.test(trimmed);
