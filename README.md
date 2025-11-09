@@ -1,9 +1,7 @@
 # url-expander.wtf
 
-![AWS](https://img.shields.io/badge/AWS-Serverless-FF9900?logo=amazonaws&logoColor=white)
-![Usefulness](https://img.shields.io/badge/Usefulness-Questionable-ff1744)
-![Productivity](https://img.shields.io/badge/Productivity-Negative-d500f9)
-![Coffee](https://img.shields.io/badge/Powered_by-Coffee_%26_Chaos-5d4037)
+![AWS](https://img.shields.io/badge/AWS-Serverless-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white&labelColor=FF9900)
+![Usefulness](https://img.shields.io/badge/Usefulness-Questionable-3498db?style=for-the-badge&labelColor=27ae60)
 
 The most needlessly overengineered way to make your links *worse*.
 
