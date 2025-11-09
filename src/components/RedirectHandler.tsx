@@ -5,7 +5,7 @@ import { Loader2, ExternalLink } from 'lucide-react';
 const RedirectHandler = () => {
   const location = useLocation();
   const [error, setError] = useState<string | null>(null);
-  const [redirectInfo, setRedirectInfo] = useState<{ url: string; countdown: number } | null>(null);
+  const [redirectInfo, setRedirectInfo] = useState<{ url: string; countdown: number; code: string } | null>(null);
 
   useEffect(() => {
     const fetchAndRedirect = async () => {
@@ -62,7 +62,7 @@ const RedirectHandler = () => {
         console.log('[REDIRECT] Will redirect to:', originalUrl);
 
         // Show redirect page with countdown
-        setRedirectInfo({ url: originalUrl, countdown: 3 });
+        setRedirectInfo({ url: originalUrl, countdown: 3, code });
       } catch (err) {
         console.error('[REDIRECT] Error:', err);
         setError('An error occurred while redirecting');
@@ -70,17 +70,18 @@ const RedirectHandler = () => {
     };
 
     fetchAndRedirect();
-  }, [location]);
+  }, [location.pathname]);
 
   // Countdown and redirect effect
   useEffect(() => {
     if (!redirectInfo) return;
 
-    // Increment click count when redirect page is shown
-    const code = location.pathname.slice(1);
-    fetch(`https://e4lqku9uee.execute-api.ap-southeast-3.amazonaws.com/v1/url-mappings/${code}/click`, {
-      method: 'POST'
-    }).catch(err => console.error('[REDIRECT] Failed to increment click count:', err));
+    // Increment click count when redirect page is shown (only once)
+    if (redirectInfo.countdown === 3) {
+      fetch(`https://e4lqku9uee.execute-api.ap-southeast-3.amazonaws.com/v1/url-mappings/${redirectInfo.code}/click`, {
+        method: 'POST'
+      }).catch(err => console.error('[REDIRECT] Failed to increment click count:', err));
+    }
 
     // Countdown timer
     if (redirectInfo.countdown > 0) {
