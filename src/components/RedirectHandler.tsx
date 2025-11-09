@@ -9,17 +9,23 @@ const RedirectHandler = () => {
 
   useEffect(() => {
     const fetchAndRedirect = async () => {
-      // Extract code from path (remove leading slash)
-      const code = location.pathname.slice(1);
-
       console.log('[REDIRECT] Component mounted, pathname:', location.pathname);
-      console.log('[REDIRECT] Extracted code:', code);
 
-      // Ignore known routes
-      const knownRoutes = ['dashboard', 'e'];
-      if (knownRoutes.some(route => code.startsWith(route)) || code === '') {
-        console.log('[REDIRECT] Ignoring known route or empty path');
-        return;
+      // Extract code from path
+      let code = location.pathname.slice(1); // Remove leading slash
+
+      // Check if path starts with /e/
+      if (code.startsWith('e/')) {
+        code = code.slice(2); // Remove 'e/' prefix
+        console.log('[REDIRECT] Extracted code from /e/ route:', code);
+      } else {
+        // Ignore known routes that are NOT /e/
+        const knownRoutes = ['dashboard'];
+        if (knownRoutes.some(route => code.startsWith(route)) || code === '') {
+          console.log('[REDIRECT] Ignoring known route or empty path');
+          return;
+        }
+        console.log('[REDIRECT] Extracted code from root route:', code);
       }
 
       try {

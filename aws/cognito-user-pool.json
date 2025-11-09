@@ -1,0 +1,26 @@
+{
+  "Id": "ap-southeast-3_My3vl7vSz",
+  "Name": "User pool - 0dulj",
+  "Policies": {
+    "PasswordPolicy": {
+      "MinimumLength": 8,
+      "RequireUppercase": true,
+      "RequireLowercase": true,
+      "RequireNumbers": true,
+      "RequireSymbols": true,
+      "TemporaryPasswordValidityDays": 7
+    },
+    "SignInPolicy": {
+      "AllowedFirstAuthFactors": [
+        "PASSWORD"
+      ]
+    }
+  },
+  "AutoVerifiedAttributes": [
+    "email"
+  ],
+  "UsernameAttributes": [
+    "email"
+  ],
+  "MfaConfiguration": "OFF"
+}

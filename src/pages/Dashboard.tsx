@@ -231,12 +231,12 @@ const Dashboard = () => {
                       </label>
                       <div className="flex items-start gap-3 mt-1 bg-white/50 p-3 md:p-4 rounded-lg min-w-0 w-full">
                         <code className="text-xs md:text-sm text-the-frick-text block break-all flex-1">
-                          {url.expanded_url}
+                          https://url-expander.wtf/e/{url.code}
                         </code>
                         <Button
                           size="sm"
                           variant="ghost"
-                          onClick={() => copyToClipboard(url.expanded_url)}
+                          onClick={() => copyToClipboard(`https://url-expander.wtf/e/${url.code}`)}
                           className="hover:bg-transparent flex-shrink-0 p-0 h-auto mt-0.5"
                         >
                           <Copy className="h-4 w-4 text-the-frick-text" />

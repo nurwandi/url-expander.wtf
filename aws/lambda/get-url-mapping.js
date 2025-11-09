@@ -1,8 +1,8 @@
-const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
-const { DynamoDBDocumentClient, GetCommand } = require('@aws-sdk/lib-dynamodb');
+const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBDocumentClient, GetCommand, UpdateCommand } = require("@aws-sdk/lib-dynamodb");
 
-const client = new DynamoDBClient({ region: process.env.AWS_REGION || 'us-east-1' });
-const docClient = DynamoDBDocumentClient.from(client);
+const client = new DynamoDBClient({ region: "ap-southeast-3" });
+const dynamodb = DynamoDBDocumentClient.from(client);
 
 exports.handler = async (event) => {
   const headers = {
@@ -10,14 +10,6 @@ exports.handler = async (event) => {
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'GET, OPTIONS'
   };
-
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 200,
-      headers,
-      body: ''
-    };
-  }
 
   try {
     const expanded_code = event.pathParameters?.expanded_code;
@@ -30,14 +22,17 @@ exports.handler = async (event) => {
       };
     }
 
-    const params = {
-      TableName: process.env.TABLE_NAME || 'url-mappings',
+    console.log('Looking up expanded_code:', expanded_code);
+
+    // Get the URL mapping
+    const getParams = {
+      TableName: 'url-mappings',
       Key: {
-        expanded_code
+        expanded_code: expanded_code
       }
     };
 
-    const result = await docClient.send(new GetCommand(params));
+    const result = await dynamodb.send(new GetCommand(getParams));
 
     if (!result.Item) {
       return {
@@ -47,9 +42,9 @@ exports.handler = async (event) => {
       };
     }
 
-    // Check if URL has expired
-    const currentTime = Math.floor(Date.now() / 1000);
-    if (result.Item.expires_at && result.Item.expires_at < currentTime) {
+    // Check if URL is expired
+    const now = Math.floor(Date.now() / 1000);
+    if (result.Item.expires_at && result.Item.expires_at < now) {
       return {
         statusCode: 404,
         headers,
@@ -57,22 +52,38 @@ exports.handler = async (event) => {
       };
     }
 
+    // Increment click count
+    const updateParams = {
+      TableName: 'url-mappings',
+      Key: {
+        expanded_code: expanded_code
+      },
+      UpdateExpression: 'SET click_count = if_not_exists(click_count, :zero) + :inc',
+      ExpressionAttributeValues: {
+        ':inc': 1,
+        ':zero': 0
+      },
+      ReturnValues: 'ALL_NEW'
+    };
+
+    const updateResult = await dynamodb.send(new UpdateCommand(updateParams));
+
+    console.log('Click count incremented. New count:', updateResult.Attributes.click_count);
+
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({
-        data: {
-          ...result.Item,
-          expires_at: new Date(result.Item.expires_at * 1000).toISOString() // Convert back to ISO string
-        }
+      body: JSON.stringify({ 
+        data: updateResult.Attributes
       })
     };
+
   } catch (error) {
-    console.error('Error retrieving URL mapping:', error);
+    console.error('Error:', error);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Failed to retrieve URL mapping' })
+      body: JSON.stringify({ error: 'Internal server error', details: error.message })
     };
   }
 };
