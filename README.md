@@ -51,8 +51,6 @@ Some of us are driven by chaos, caffeine, and a desire to see how far we can pus
 - 📈 **Analytics Dashboard** - AWS Athena queries for traffic insights (country, device, browser)
 - 🔒 **Security Monitoring** - Detect bots, SQL injection attempts, and suspicious traffic
 - 🎭 **Redirect Page with Countdown** - 3-2-1 countdown before redirecting
-- 🎨 **Beautiful UI** - Clean, minimal design with warm beige aesthetics (inspired by Anthropic)
-- 🌙 **Dark Mode** - Because it's 2025
 - 🌙 **Anonymous mode** - Generate URLs without login (no tracking)
 - 🚀 **Serverless architecture** - Scales to infinity (or your AWS bill limit)
 - 💸 **Pay-per-use pricing** - Almost free for low traffic (~$0.01/month)
