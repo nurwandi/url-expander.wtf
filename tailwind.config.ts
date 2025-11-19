@@ -73,6 +73,7 @@ export default {
 					'card-lavender': '#D5D3E8',   // Card variant 3 (lavender)
 					'rust': '#CC7A63',            // Primary accent (terracotta/rust)
 					'text': '#1A1A1A',            // Primary text (almost black)
+					'text-hover': '#2A2A2A',      // Text hover state (slightly lighter)
 					'text-muted': '#666666',      // Secondary text
 					'border': '#D4C9BA',          // Borders
 				},

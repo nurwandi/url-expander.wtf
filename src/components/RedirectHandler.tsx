@@ -119,7 +119,7 @@ const RedirectHandler = () => {
     return (
       <div className="min-h-screen bg-the-frick-bg flex items-center justify-center px-6">
         <div className="max-w-2xl w-full text-center">
-          <div className="bg-[#E8DCC8] rounded-3xl p-8 md:p-12">
+          <div className="bg-the-frick-card-beige rounded-3xl p-8 md:p-12">
             <h1 className="text-4xl md:text-5xl font-bold font-display text-the-frick-text mb-6">
               Redirecting...
             </h1>

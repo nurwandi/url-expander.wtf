@@ -122,7 +122,7 @@ const ExpandedUrl = () => {
       {/* Main content */}
       <main className="flex-1 flex items-center justify-center w-full py-6 md:py-8">
         <div className="max-w-2xl mx-auto px-6 sm:px-8 md:px-12 w-full">
-          <div className="bg-[#E8DCC8] rounded-xl md:rounded-2xl lg:rounded-3xl p-8 sm:p-10 md:p-12">
+          <div className="bg-the-frick-card-beige rounded-xl md:rounded-2xl lg:rounded-3xl p-8 sm:p-10 md:p-12">
             {isLoading ? (
               // Loading state
               <div className="flex flex-col items-center justify-center space-y-4 sm:space-y-6 py-4 sm:py-8">
@@ -130,7 +130,7 @@ const ExpandedUrl = () => {
                   <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border-3 sm:border-4 border-t-transparent border-the-frick-rust rounded-full animate-spin"></div>
                 </div>
 
-                <div className="text-lg sm:text-xl md:text-2xl font-bold font-display text-[#1A1A1A]">
+                <div className="text-lg sm:text-xl md:text-2xl font-bold font-display text-the-frick-text">
                   Processing URL...
                 </div>
 
@@ -155,11 +155,11 @@ const ExpandedUrl = () => {
                   </div>
 
                   <div className="space-y-2 sm:space-y-2.5 md:space-y-3">
-                    <div className="text-xl sm:text-2xl md:text-3xl font-bold font-display text-[#1A1A1A] leading-tight">
+                    <div className="text-xl sm:text-2xl md:text-3xl font-bold font-display text-the-frick-text leading-tight">
                       Redirecting you...
                     </div>
 
-                    <p className="text-xs sm:text-sm md:text-base text-[#1A1A1A]/70 max-w-md mx-auto leading-relaxed px-2 sm:px-4">
+                    <p className="text-xs sm:text-sm md:text-base text-the-frick-text/70 max-w-md mx-auto leading-relaxed px-2 sm:px-4">
                       {message}
                     </p>
 
@@ -169,7 +169,7 @@ const ExpandedUrl = () => {
                   </div>
 
                   <div className="w-full max-w-sm sm:max-w-md mt-2 sm:mt-3 md:mt-4">
-                    <div className="w-full h-2 bg-[#1A1A1A]/20 rounded-full overflow-hidden">
+                    <div className="w-full h-2 bg-the-frick-text/20 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-the-frick-rust transition-all duration-1000 ease-linear"
                         style={{width: `${(5 - countdown) / 5 * 100}%`}}

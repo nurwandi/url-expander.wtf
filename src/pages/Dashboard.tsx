@@ -159,7 +159,7 @@ const Dashboard = () => {
           <div className="flex items-center gap-4">
             <Button
               onClick={logout}
-              className="bg-[#1A1A1A] text-white hover:bg-[#2A2A2A] rounded-full px-6 py-2.5 font-medium transition-all shadow-sm"
+              className="bg-the-frick-text text-white hover:bg-the-frick-text-hover rounded-full px-6 py-2.5 font-medium transition-all shadow-sm"
             >
               Sign out
             </Button>
@@ -183,7 +183,7 @@ const Dashboard = () => {
             <Loader2 className="h-8 w-8 animate-spin text-the-frick-rust" />
           </div>
         ) : urls.length === 0 ? (
-          <Card className="p-12 text-center bg-[#E8DCC8] border-0">
+          <Card className="p-12 text-center bg-the-frick-card-beige border-0">
             <p className="text-lg text-the-frick-text-muted mb-4">
               You haven't created any URLs yet
             </p>
@@ -203,7 +203,7 @@ const Dashboard = () => {
               return (
                 <Card
                   key={url.id}
-                  className="p-4 md:p-6 bg-[#E8DCC8] border-0 overflow-hidden"
+                  className="p-4 md:p-6 bg-the-frick-card-beige border-0 overflow-hidden"
                 >
                   <div className="flex flex-col gap-4 min-w-0 w-full">
                     {/* Original URL */}

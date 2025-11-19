@@ -65,7 +65,7 @@ const Index = () => {
           {!isAuthenticated ? (
             <InteractiveHoverButton
               onClick={login}
-              className="bg-[#1A1A1A] text-white hover:bg-[#2A2A2A] rounded-full px-6 py-2.5 font-medium transition-all shadow-sm border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="bg-the-frick-text text-white hover:bg-the-frick-text-hover rounded-full px-6 py-2.5 font-medium transition-all shadow-sm border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
             >
               Sign in
             </InteractiveHoverButton>
@@ -73,7 +73,7 @@ const Index = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
-                  className="bg-[#1A1A1A] text-white hover:bg-[#2A2A2A] rounded-full px-6 py-2.5 font-medium transition-all shadow-sm flex items-center gap-2 group border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  className="bg-the-frick-text text-white hover:bg-the-frick-text-hover rounded-full px-6 py-2.5 font-medium transition-all shadow-sm flex items-center gap-2 group border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                 >
                   <span>{user?.name?.split(' ')[0] || user?.email?.split('@')[0] || 'Account'}</span>
                   <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
@@ -163,22 +163,22 @@ const Index = () => {
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
                   {/* Left side - Form */}
                   <div>
-                    <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-[#1A1A1A] leading-tight">
+                    <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-the-frick-text leading-tight">
                       Enter Your URL
                     </h2>
-                    <p className="text-base md:text-lg text-[#1A1A1A]/70 leading-relaxed mb-6">
+                    <p className="text-base md:text-lg text-the-frick-text/70 leading-relaxed mb-6">
                       Transform it into something unwieldy and ridiculously long.
                     </p>
                     <UrlForm onUrlExpanded={handleUrlExpanded} />
                   </div>
 
                   {/* Right side - Additional Info */}
-                  <div className="lg:border-l lg:border-[#1A1A1A]/15 lg:pl-12 lg:flex lg:items-center">
+                  <div className="lg:border-l lg:border-the-frick-text/15 lg:pl-12 lg:flex lg:items-center">
                     <div className="space-y-4 lg:px-8">
-                      <p className="text-sm md:text-base text-[#1A1A1A]/80 leading-relaxed">
+                      <p className="text-sm md:text-base text-the-frick-text/80 leading-relaxed">
                         Your extended link is only valid for 7 days, cause I don't wanna pay for more storage!
                       </p>
-                      <p className="text-sm md:text-base text-[#1A1A1A]/80 leading-relaxed">
+                      <p className="text-sm md:text-base text-the-frick-text/80 leading-relaxed">
                         Use it while it lasts. After expiration, the link will be permanently deleted and you'll need to create a new one.
                       </p>
                     </div>
