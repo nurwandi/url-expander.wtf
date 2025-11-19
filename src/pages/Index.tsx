@@ -9,6 +9,9 @@ import { Coffee, User, LogOut, LayoutDashboard, ChevronDown, ExternalLink } from
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
+import InteractiveHoverButton from '@/components/ui/interactive-hover-button';
+import { MagicCard } from '@/components/ui/magic-card';
+import { ScrollVelocityContainer, ScrollVelocityRow } from '@/components/ui/scroll-based-velocity';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -60,12 +63,12 @@ const Index = () => {
 
           {/* Auth buttons - Modern inspired */}
           {!isAuthenticated ? (
-            <Button
+            <InteractiveHoverButton
               onClick={login}
               className="bg-[#1A1A1A] text-white hover:bg-[#2A2A2A] rounded-full px-6 py-2.5 font-medium transition-all shadow-sm border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
             >
               Sign in
-            </Button>
+            </InteractiveHoverButton>
           ) : (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -123,35 +126,66 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Satire Scroll Velocity Text Section */}
+        <section className="w-full py-12 bg-the-frick-rust overflow-hidden">
+          <ScrollVelocityContainer>
+            <ScrollVelocityRow baseVelocity={-2} className="text-white/90 text-2xl md:text-4xl font-bold font-display py-4">
+              <span className="mx-8">⏰ Only 7 Days • </span>
+              <span className="mx-8">Because Storage Costs Money • </span>
+              <span className="mx-8">Use It or Lose It • </span>
+              <span className="mx-8">No Refunds • </span>
+              <span className="mx-8">No Exceptions • </span>
+              <span className="mx-8">Temporary by Design • </span>
+            </ScrollVelocityRow>
+            <ScrollVelocityRow baseVelocity={2} className="text-white/70 text-xl md:text-3xl font-display py-4">
+              <span className="mx-8">I'm Too Cheap for Permanent Storage • </span>
+              <span className="mx-8">Your Link Will Self-Destruct • </span>
+              <span className="mx-8">Tick Tock Goes the Clock • </span>
+              <span className="mx-8">Don't Blame Me Later • </span>
+              <span className="mx-8">Budget Hosting Problems • </span>
+              <span className="mx-8">7 Days Is All You Get • </span>
+            </ScrollVelocityRow>
+          </ScrollVelocityContainer>
+        </section>
+
         {/* URL Input Form Section with Expiration Info */}
         <section className="w-full py-16 md:py-24">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
-            <div className="bg-[#E8DCC8] rounded-[2rem] p-10 md:p-14">
-              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-                {/* Left side - Form */}
-                <div>
-                  <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-[#1A1A1A] leading-tight">
-                    Enter Your URL
-                  </h2>
-                  <p className="text-base md:text-lg text-[#1A1A1A]/70 leading-relaxed mb-6">
-                    Transform it into something unwieldy and ridiculously long.
-                  </p>
-                  <UrlForm onUrlExpanded={handleUrlExpanded} />
-                </div>
+            <MagicCard
+              className="bg-[#E8DCC8] rounded-[2rem]"
+              gradientSize={200}
+              gradientFrom="rgba(212, 165, 116, 0.15)"
+              gradientTo="rgba(166, 124, 82, 0.1)"
+              gradientColor="#8B7355"
+              gradientOpacity={0.1}
+            >
+              <div className="p-10 md:p-14">
+                <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+                  {/* Left side - Form */}
+                  <div>
+                    <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-[#1A1A1A] leading-tight">
+                      Enter Your URL
+                    </h2>
+                    <p className="text-base md:text-lg text-[#1A1A1A]/70 leading-relaxed mb-6">
+                      Transform it into something unwieldy and ridiculously long.
+                    </p>
+                    <UrlForm onUrlExpanded={handleUrlExpanded} />
+                  </div>
 
-                {/* Right side - Additional Info */}
-                <div className="lg:border-l lg:border-[#1A1A1A]/15 lg:pl-12 lg:flex lg:items-center">
-                  <div className="space-y-4 lg:px-8">
-                    <p className="text-sm md:text-base text-[#1A1A1A]/80 leading-relaxed">
-                      Your extended link is only valid for 7 days, cause I don't wanna pay for more storage!
-                    </p>
-                    <p className="text-sm md:text-base text-[#1A1A1A]/80 leading-relaxed">
-                      Use it while it lasts. After expiration, the link will be permanently deleted and you'll need to create a new one.
-                    </p>
+                  {/* Right side - Additional Info */}
+                  <div className="lg:border-l lg:border-[#1A1A1A]/15 lg:pl-12 lg:flex lg:items-center">
+                    <div className="space-y-4 lg:px-8">
+                      <p className="text-sm md:text-base text-[#1A1A1A]/80 leading-relaxed">
+                        Your extended link is only valid for 7 days, cause I don't wanna pay for more storage!
+                      </p>
+                      <p className="text-sm md:text-base text-[#1A1A1A]/80 leading-relaxed">
+                        Use it while it lasts. After expiration, the link will be permanently deleted and you'll need to create a new one.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </MagicCard>
           </div>
         </section>
           
