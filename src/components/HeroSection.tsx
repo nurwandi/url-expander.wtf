@@ -2,6 +2,7 @@
 import React from 'react';
 import { BentoCard, BentoGrid } from '@/components/ui/bento-grid';
 import { ConfettiButton } from '@/components/ui/confetti';
+import { SparklesText } from '@/components/ui/sparkles-text';
 
 // Icon components as inline SVGs wrapped in divs
 const UnnecessaryIcon = ({ className }: { className?: string }) => (
@@ -69,7 +70,11 @@ const HeroSection: React.FC = () => {
       {/* Content - centered layout with max-width */}
       <div className="mb-12 md:mb-16 relative z-10">
         {/* Large heading with underline style */}
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-display mb-6 md:mb-8 leading-tight max-w-5xl">
+        <SparklesText
+          colors={{ first: '#CC7A63', second: '#D4A574' }}
+          sparklesCount={12}
+          className="text-4xl md:text-6xl lg:text-7xl font-bold font-display mb-6 md:mb-8 leading-tight max-w-5xl"
+        >
           <span className="inline-block">Making URLs</span>
           <br />
           <ConfettiButton
@@ -84,7 +89,7 @@ const HeroSection: React.FC = () => {
             Ridiculously
           </ConfettiButton>{' '}
           <span className="inline-block">Pointless</span>
-        </h1>
+        </SparklesText>
 
         {/* Subtitle */}
         <div className="max-w-3xl">
