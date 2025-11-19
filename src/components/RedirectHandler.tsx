@@ -134,7 +134,7 @@ const RedirectHandler = () => {
               You will be redirected to:
             </p>
 
-            <div className="bg-white/50 p-4 rounded-lg mb-8">
+            <div className="bg-white/50 p-4 rounded-2xl mb-8">
               <a
                 href={redirectInfo.url}
                 className="text-the-frick-rust hover:underline break-all text-sm md:text-base"

@@ -149,7 +149,7 @@ const Index = () => {
         </section>
 
         {/* URL Input Form Section with Expiration Info */}
-        <section className="w-full py-16 md:py-24">
+        <section className="w-full pt-24 pb-16 md:pt-32 md:pb-24">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             <MagicCard
               className="bg-[#E8DCC8] rounded-[2rem]"

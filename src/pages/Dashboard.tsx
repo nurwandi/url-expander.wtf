@@ -230,7 +230,7 @@ const Dashboard = () => {
                       <label className="text-xs font-medium text-the-frick-text-muted uppercase tracking-wide">
                         Expanded URL
                       </label>
-                      <div className="flex items-start gap-3 mt-1 bg-white/50 p-3 md:p-4 rounded-lg min-w-0 w-full">
+                      <div className="flex items-start gap-3 mt-1 bg-white/50 p-3 md:p-4 rounded-2xl min-w-0 w-full">
                         <code className="text-xs md:text-sm text-the-frick-text block break-all flex-1">
                           https://url-expander.wtf/e/{url.code}
                         </code>

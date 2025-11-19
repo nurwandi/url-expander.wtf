@@ -42,6 +42,8 @@
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.4",
     "@tanstack/react-query": "^5.56.2",
+    "@tsparticles/engine": "^3.9.1",
+    "@tsparticles/react": "^3.0.0",
     "aws-amplify": "^6.15.8",
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
@@ -63,6 +65,7 @@
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "tsparticles": "^3.9.1",
     "vaul": "^0.9.3",
     "zod": "^3.23.8"
   },

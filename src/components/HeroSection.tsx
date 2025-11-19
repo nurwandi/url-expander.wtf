@@ -3,6 +3,7 @@ import React from 'react';
 import { BentoCard, BentoGrid } from '@/components/ui/bento-grid';
 import { ConfettiButton } from '@/components/ui/confetti';
 import { SparklesText } from '@/components/ui/sparkles-text';
+import { AnimatedTextReveal } from '@/components/ui/animated-text-reveal';
 
 // Icon components as inline SVGs wrapped in divs
 const UnnecessaryIcon = ({ className }: { className?: string }) => (
@@ -93,9 +94,12 @@ const HeroSection: React.FC = () => {
 
         {/* Subtitle */}
         <div className="max-w-3xl">
-          <p className="text-lg md:text-2xl text-the-frick-text leading-relaxed font-normal">
-            URL will have a vast impact on the world. url-expander.wtf is a satirical project dedicated to making URLs absurdly longer and mitigating their efficiency.
-          </p>
+          <AnimatedTextReveal
+            text="URL will have a vast impact on the world. url-expander.wtf is a satirical project dedicated to making URLs absurdly longer and mitigating their efficiency."
+            className="text-lg md:text-2xl text-the-frick-text leading-relaxed font-normal"
+            staggerDelay={0.04}
+            initialDelay={0.5}
+          />
         </div>
       </div>
 
