@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Loader2, ExternalLink } from 'lucide-react';
+import { Clock, ExternalLink } from 'lucide-react';
+import HamsterLoader from '@/components/ui/hamster-loader';
 
 const RedirectHandler = () => {
   const location = useLocation();
@@ -98,17 +99,29 @@ const RedirectHandler = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-the-frick-bg flex items-center justify-center px-6">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold font-display text-the-frick-text mb-4">
-            Oops!
-          </h1>
-          <p className="text-the-frick-text-muted text-lg mb-8">{error}</p>
-          <a
-            href="/"
-            className="inline-block bg-the-frick-rust text-white px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
-          >
-            Go Home
-          </a>
+        <div className="max-w-md w-full">
+          <div className="bg-white border-4 border-the-frick-text rounded-lg shadow-[12px_12px_0_0_#1A1A1A] p-8 md:p-12 relative overflow-hidden">
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
+              backgroundImage: `linear-gradient(to right, rgba(26, 26, 26, 0.03) 1px, transparent 1px),
+                                linear-gradient(to bottom, rgba(26, 26, 26, 0.03) 1px, transparent 1px)`,
+              backgroundSize: '8px 8px',
+              zIndex: 1
+            }} />
+
+            <div className="relative z-10 text-center">
+              <h1 className="text-3xl md:text-4xl font-black font-display text-the-frick-text mb-4 uppercase tracking-tight">
+                Oops!
+              </h1>
+              <p className="text-the-frick-text-muted text-base md:text-lg mb-8 font-medium">{error}</p>
+              <a
+                href="/"
+                className="inline-block bg-the-frick-rust text-white px-6 py-3 border-3 border-the-frick-text shadow-[4px_4px_0_0_#1A1A1A] hover:shadow-[6px_6px_0_0_#1A1A1A] hover:-translate-y-0.5 transition-all font-black uppercase tracking-wide text-sm"
+              >
+                Go Home
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -118,40 +131,67 @@ const RedirectHandler = () => {
   if (redirectInfo) {
     return (
       <div className="min-h-screen bg-the-frick-bg flex items-center justify-center px-6">
-        <div className="max-w-2xl w-full text-center">
-          <div className="bg-[#E8DCC8] rounded-3xl p-8 md:p-12">
-            <h1 className="text-4xl md:text-5xl font-bold font-display text-the-frick-text mb-6">
-              Redirecting...
-            </h1>
+        <div className="max-w-2xl w-full">
+          <div className="bg-white border-4 border-the-frick-text rounded-lg shadow-[12px_12px_0_0_#1A1A1A] p-8 sm:p-10 md:p-12 relative overflow-hidden">
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
+              backgroundImage: `linear-gradient(to right, rgba(26, 26, 26, 0.03) 1px, transparent 1px),
+                                linear-gradient(to bottom, rgba(26, 26, 26, 0.03) 1px, transparent 1px)`,
+              backgroundSize: '8px 8px',
+              zIndex: 1
+            }} />
 
-            <div className="flex items-center justify-center mb-8">
-              <div className="text-6xl md:text-8xl font-bold text-the-frick-rust">
-                {redirectInfo.countdown}
+            <div className="relative z-10">
+              <div className="flex flex-col items-center text-center space-y-6">
+                <div className="w-16 h-16 bg-the-frick-rust border-4 border-the-frick-text flex items-center justify-center rotate-6">
+                  <Clock className="h-8 w-8 text-white" />
+                </div>
+
+                <div className="space-y-3">
+                  <div className="text-2xl md:text-3xl font-black font-display text-the-frick-text uppercase tracking-tight">
+                    Redirecting you...
+                  </div>
+
+                  <p className="text-base md:text-lg font-black text-the-frick-rust uppercase tracking-wide pt-2">
+                    Redirecting in {redirectInfo.countdown} seconds...
+                  </p>
+                </div>
+
+                <div className="w-full max-w-sm sm:max-w-md mt-4">
+                  <div className="w-full h-3 bg-the-frick-card-beige border-2 border-the-frick-text rounded overflow-hidden">
+                    <div
+                      className="h-full bg-the-frick-rust transition-all duration-1000 ease-linear"
+                      style={{width: `${(3 - redirectInfo.countdown) / 3 * 100}%`}}
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <p className="text-sm text-the-frick-text-muted mb-3 font-medium">
+                    You will be redirected to:
+                  </p>
+
+                  <div className="bg-the-frick-card-beige/50 p-3 border-2 border-the-frick-text rounded mb-6 max-w-md">
+                    <a
+                      href={redirectInfo.url}
+                      className="text-the-frick-rust hover:underline break-all text-xs md:text-sm font-mono"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {redirectInfo.url}
+                    </a>
+                  </div>
+
+                  <button
+                    onClick={() => window.location.href = redirectInfo.url}
+                    className="inline-flex items-center gap-2 bg-the-frick-rust text-white px-6 py-3 border-3 border-the-frick-text shadow-[4px_4px_0_0_#1A1A1A] hover:shadow-[6px_6px_0_0_#1A1A1A] hover:-translate-y-0.5 transition-all font-black uppercase tracking-wide text-sm"
+                  >
+                    <span>Go Now</span>
+                    <ExternalLink className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
             </div>
-
-            <p className="text-lg text-the-frick-text-muted mb-6">
-              You will be redirected to:
-            </p>
-
-            <div className="bg-white/50 p-4 rounded-lg mb-8">
-              <a
-                href={redirectInfo.url}
-                className="text-the-frick-rust hover:underline break-all text-sm md:text-base"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {redirectInfo.url}
-              </a>
-            </div>
-
-            <button
-              onClick={() => window.location.href = redirectInfo.url}
-              className="inline-flex items-center gap-2 bg-the-frick-rust text-white px-6 py-3 rounded-full hover:opacity-90 transition-opacity font-medium"
-            >
-              <span>Go Now</span>
-              <ExternalLink className="h-4 w-4" />
-            </button>
           </div>
         </div>
       </div>
@@ -160,10 +200,31 @@ const RedirectHandler = () => {
 
   // Loading state
   return (
-    <div className="min-h-screen bg-the-frick-bg flex items-center justify-center">
-      <div className="text-center">
-        <Loader2 className="h-12 w-12 animate-spin text-the-frick-rust mx-auto mb-4" />
-        <p className="text-the-frick-text-muted">Loading...</p>
+    <div className="min-h-screen bg-the-frick-bg flex items-center justify-center px-6">
+      <div className="max-w-2xl w-full">
+        <div className="bg-white border-4 border-the-frick-text rounded-lg shadow-[12px_12px_0_0_#1A1A1A] p-8 sm:p-10 md:p-12 relative overflow-hidden">
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
+            backgroundImage: `linear-gradient(to right, rgba(26, 26, 26, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(26, 26, 26, 0.03) 1px, transparent 1px)`,
+            backgroundSize: '8px 8px',
+            zIndex: 1
+          }} />
+
+          <div className="relative z-10">
+            <div className="flex flex-col items-center justify-center space-y-6 py-8">
+              <HamsterLoader />
+
+              <div className="text-lg sm:text-xl md:text-2xl font-black font-display text-the-frick-text uppercase tracking-tight">
+                Processing URL...
+              </div>
+
+              <p className="text-sm text-the-frick-text-muted font-medium">
+                Our server hamsters are running to process your URL
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

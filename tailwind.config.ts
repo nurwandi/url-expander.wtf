@@ -73,6 +73,7 @@ export default {
 					'card-lavender': '#D5D3E8',   // Card variant 3 (lavender)
 					'rust': '#CC7A63',            // Primary accent (terracotta/rust)
 					'text': '#1A1A1A',            // Primary text (almost black)
+					'text-hover': '#2A2A2A',      // Text hover state (slightly lighter)
 					'text-muted': '#666666',      // Secondary text
 					'border': '#D4C9BA',          // Borders
 				},
@@ -120,6 +121,15 @@ export default {
 				'slide-in': {
 					'0%': { transform: 'translateY(20px)', opacity: '0' },
 					'100%': { transform: 'translateY(0)', opacity: '1' },
+				},
+				'shine': {
+					'0%': { backgroundPosition: '-200% 0' },
+					'100%': { backgroundPosition: '200% 0' },
+				},
+				'border-beam': {
+					'100%': {
+						'offset-distance': '100%',
+					},
 				}
 			},
 			animation: {
@@ -130,6 +140,11 @@ export default {
 				'bounce-slight': 'bounce-slight 2s ease-in-out infinite',
 				'float': 'float 3s ease-in-out infinite',
 				'slide-in': 'slide-in 0.6s ease-out forwards',
+				'shine': 'shine 3s ease-in-out infinite',
+				'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
+			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 			},
 			fontFamily: {
 				'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],

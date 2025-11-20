@@ -8,9 +8,9 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import ExpandedUrl from "./pages/ExpandedUrl";
 import Dashboard from "./pages/Dashboard";
 import RedirectHandler from "@/components/RedirectHandler";
+import ExpandedUrl from "./pages/ExpandedUrl";
 
 const queryClient = new QueryClient();
 

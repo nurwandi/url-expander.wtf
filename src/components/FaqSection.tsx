@@ -1,5 +1,6 @@
 
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'motion/react';
 import {
   Accordion,
   AccordionContent,
@@ -7,10 +8,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useIsMobile } from '@/hooks/use-mobile';
+import { AnimatedTextReveal } from '@/components/ui/animated-text-reveal';
 
 const FaqSection: React.FC = () => {
   const isMobile = useIsMobile();
-  
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: false, margin: "-100px" });
+
   const faqItems = [
     {
       question: "Why would anyone want longer URLs?",
@@ -35,67 +39,90 @@ const FaqSection: React.FC = () => {
   ];
   
   return (
-    <div className="w-full max-w-5xl mx-auto">
-      <div className="flex flex-col mb-12 md:mb-16">
-        <h2 className="text-display-m md:text-display-l font-medium mb-4 text-center tracking-tight text-gray-900 dark:text-the-frick-cream transition-colors duration-200">
-          Frequently Asked <span className="text-the-frick-rust transition-colors duration-200">Why</span> Questions
+    <div ref={ref} className="w-full max-w-5xl mx-auto">
+      <motion.div
+        className="flex flex-col mb-12 md:mb-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <h2 className="text-display-m md:text-display-l font-black mb-4 text-center tracking-tight text-the-frick-text uppercase">
+          <AnimatedTextReveal
+            text="Frequently Asked Why Questions"
+            triggerOnScroll={true}
+            once={false}
+            staggerDelay={0.06}
+            initialDelay={0.2}
+            className="inline"
+          />
         </h2>
-      </div>
+      </motion.div>
 
       <div className="flex flex-col lg:flex-row gap-12">
         <div className="lg:w-1/2">
           <Accordion type="single" collapsible className="w-full">
             {faqItems.map((item, index) => (
-              <AccordionItem
+              <motion.div
                 key={index}
-                value={`item-${index}`}
-                className="border-b border-gray-200 dark:border-the-frick-cream-subtle last:border-b-0 transition-colors duration-200"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{
+                  duration: 0.5,
+                  delay: isInView ? 0.3 + index * 0.1 : 0,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
               >
-                <AccordionTrigger className="py-5 hover:no-underline transition-colors duration-200">
-                  <h3 className="text-lg md:text-xl font-medium text-gray-900 dark:text-the-frick-cream mb-0 text-left transition-colors duration-200">
-                    {item.question}
-                  </h3>
-                </AccordionTrigger>
-                <AccordionContent className="pb-5">
-                  <div className="bg-gray-50 dark:bg-the-frick-slate-medium p-6 border border-gray-200 dark:border-the-frick-cream-subtle mt-2 transition-colors duration-200">
-                    <p className="text-gray-600 dark:text-the-frick-cream-muted text-base transition-colors duration-200">{item.answer}</p>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
+                <AccordionItem
+                  value={`item-${index}`}
+                  className="border-b-3 border-the-frick-text last:border-b-0"
+                  style={{borderBottomWidth: index !== faqItems.length - 1 ? '3px' : '0'}}
+                >
+                  <AccordionTrigger className="py-5 hover:no-underline">
+                    <h3 className="text-lg md:text-xl font-bold text-the-frick-text mb-0 text-left uppercase tracking-wide">
+                      {item.question}
+                    </h3>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-5">
+                    <div className="bg-white p-6 border-3 border-the-frick-text mt-2 rounded shadow-[4px_4px_0_0_rgba(26,26,26,0.2)]" style={{borderWidth: '3px'}}>
+                      <p className="text-the-frick-text text-base font-medium">{item.answer}</p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
             ))}
           </Accordion>
         </div>
 
-        <div className="hidden lg:block lg:w-1/2">
-          <div className="bg-gray-50 dark:bg-the-frick-slate-light p-10 border border-gray-200 dark:border-the-frick-cream-subtle h-full flex items-center justify-center transition-colors duration-200">
-            <div className="text-center space-y-6">
+        <motion.div
+          className="hidden lg:block lg:w-1/2"
+          initial={{ opacity: 0, x: 20 }}
+          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+          transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="bg-white p-10 border-4 border-the-frick-text h-full flex items-center justify-center rounded-lg shadow-[8px_8px_0_0_#1A1A1A] relative overflow-hidden">
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
+              backgroundImage: `linear-gradient(to right, rgba(26, 26, 26, 0.1) 1px, transparent 1px),
+                                linear-gradient(to bottom, rgba(26, 26, 26, 0.1) 1px, transparent 1px)`,
+              backgroundSize: '8px 8px'
+            }} />
+
+            <div className="text-center space-y-6 relative z-10">
               <div className="mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="64"
-                  height="64"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="mx-auto text-the-frick-rust transition-colors duration-200"
-                >
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                  <path d="M12 17h.01"/>
-                </svg>
+                {/* Brutalist question mark shape */}
+                <div className="mx-auto w-16 h-16 bg-the-frick-rust border-4 border-the-frick-text flex items-center justify-center text-4xl font-black text-white rotate-6">
+                  ?
+                </div>
               </div>
-              <h3 className="text-2xl font-medium text-gray-900 dark:text-the-frick-cream mb-3 transition-colors duration-200">
+              <h3 className="text-2xl font-black text-the-frick-text mb-3 uppercase tracking-tight">
                 Got More Questions?
               </h3>
-              <p className="text-gray-600 dark:text-the-frick-cream-muted text-base transition-colors duration-200">
+              <p className="text-the-frick-text-muted text-base font-medium">
                 Click on any question to reveal what we think is a witty answer. The fact that you're reading this means you're already too invested in this ridiculous service.
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

@@ -1,98 +1,167 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { toast } from 'sonner';
-import { getExpirationDate, getRandomJoke } from '@/utils/urlExpander';
-import { Copy, CheckCircle, AlertTriangle } from 'lucide-react';
+import { getExpirationDate } from '@/utils/urlExpander';
+import { Copy, ExternalLink, Share2, Clock, BarChart3 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ResultDisplayProps {
   expandedUrl: string;
 }
 
+const funnyTitles = [
+  "Your Unnecessarily Long URL",
+  "Behold! Your Monstrosity",
+  "Your Beautiful Disaster",
+  "This Ridiculous Thing You Created",
+  "Your Absurdly Elongated Link",
+  "The Monster You Summoned",
+  "Your Gloriously Stupid URL",
+  "This Magnificent Waste of Characters",
+  "Your Hilariously Long Mess",
+  "The Abomination You Requested",
+  "Your Perfectly Impractical URL",
+  "This Wonderfully Useless Thing",
+  "Your Excessively Extended Link",
+  "The Chaos You Unleashed",
+  "Your Spectacularly Pointless URL"
+];
+
 const ResultDisplay: React.FC<ResultDisplayProps> = ({ expandedUrl }) => {
-  const [joke, setJoke] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [copied, setCopied] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const [title, setTitle] = useState('');
   const resultRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
-  
+
   useEffect(() => {
     if (expandedUrl) {
-      setJoke(getRandomJoke());
       setExpirationDate(getExpirationDate());
-      
+      setTitle(funnyTitles[Math.floor(Math.random() * funnyTitles.length)]);
+
       // Add a slight delay to ensure the component is rendered
       setTimeout(() => {
         if (resultRef.current) {
-          resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 100);
     }
   }, [expandedUrl]);
-  
+
   const copyToClipboard = () => {
     navigator.clipboard.writeText(expandedUrl);
     setCopied(true);
     toast.success("Copied this monstrosity to your clipboard!");
-    
-    // Reset the copied state after 2 seconds
+
     setTimeout(() => {
       setCopied(false);
     }, 2000);
   };
-  
+
+  const openInNewTab = () => {
+    window.open(expandedUrl, '_blank', 'noopener,noreferrer');
+    toast.success("Opening in new tab!");
+  };
+
+  const shareUrl = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Check out this ridiculously long URL!',
+          url: expandedUrl
+        });
+      } catch (err) {
+        console.log('Share cancelled');
+      }
+    } else {
+      copyToClipboard();
+    }
+  };
+
   if (!expandedUrl) return null;
-  
+
   return (
-    <div className="w-full" ref={resultRef}>
-      <Card className="overflow-hidden relative bg-gray-50 dark:bg-the-frick-slate-light border border-gray-200 dark:border-the-frick-cream-subtle transition-colors duration-200">
-        <div className="absolute top-0 left-0 w-full h-0.5 bg-the-frick-rust transition-colors duration-200" />
+    <div className="w-full max-w-2xl mx-auto" ref={resultRef}>
+      <div
+        className="group relative overflow-hidden rounded-lg bg-white border-4 border-the-frick-text shadow-[12px_12px_0_0_#1A1A1A] transition-all duration-400 hover:shadow-[16px_16px_0_0_#1A1A1A] hover:-translate-y-1"
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
+      >
+        {/* Grid Pattern Overlay */}
+        <div className="absolute inset-0 pointer-events-none opacity-30 transition-opacity duration-400 group-hover:opacity-60" style={{
+          backgroundImage: `linear-gradient(to right, rgba(26, 26, 26, 0.03) 1px, transparent 1px),
+                            linear-gradient(to bottom, rgba(26, 26, 26, 0.03) 1px, transparent 1px)`,
+          backgroundSize: '8px 8px',
+          zIndex: 1
+        }} />
 
-        <div className="space-y-8 p-8 md:p-10">
-          <div>
-            <h3 className="text-xl md:text-2xl font-medium text-gray-900 dark:text-the-frick-cream mb-4 transition-colors duration-200">Your Unnecessarily Long URL:</h3>
-            <div className="bg-white dark:bg-the-frick-slate-dark p-6 border border-gray-200 dark:border-the-frick-cream-subtle transition-colors duration-200">
-              <p className="font-mono text-sm md:text-base text-gray-900 dark:text-the-frick-cream break-all transition-colors duration-200">{expandedUrl}</p>
+        {/* Dots Pattern Overlay */}
+        <div className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-400 group-hover:opacity-100" style={{
+          backgroundImage: 'radial-gradient(#D4C9BA 1px, transparent 1px)',
+          backgroundSize: '16px 16px',
+          backgroundPosition: '-8px -8px',
+          zIndex: 1
+        }} />
+
+        {/* Content area */}
+        <div className="relative z-10 p-6 md:p-8 flex flex-col min-h-[280px]">
+          {/* Text section */}
+          <div className="flex-grow space-y-4">
+            <h3 className="text-2xl md:text-3xl font-black text-the-frick-text uppercase tracking-tight">
+              {title}
+            </h3>
+
+            <div className="bg-the-frick-card-beige p-4 rounded border-3 border-the-frick-text max-h-32 overflow-y-auto shadow-[4px_4px_0_0_rgba(26,26,26,0.2)]" style={{borderWidth: '3px'}}>
+              <p className="font-mono text-sm md:text-base text-the-frick-text break-all font-semibold">
+                {expandedUrl}
+              </p>
             </div>
 
-            <div className="flex mt-6">
-              <Button
-                onClick={copyToClipboard}
-                className={`${copied ? 'bg-gray-900 dark:bg-the-frick-slate-dark border-gray-900 dark:border-the-frick-cream' : 'bg-the-frick-rust border-the-frick-rust'} text-white dark:text-the-frick-cream hover:bg-the-frick-rust-muted flex items-center gap-2 px-6 py-3 border transition-all duration-200`}
-              >
-                {copied ? (
-                  <>
-                    <CheckCircle size={isMobile ? 16 : 18} /> Copied!
-                  </>
-                ) : (
-                  <>
-                    <Copy size={isMobile ? 16 : 18} /> Copy This Monstrosity
-                  </>
-                )}
-              </Button>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-200 dark:border-the-frick-cream-subtle pt-8 transition-colors duration-200">
-            <div className="bg-white dark:bg-the-frick-slate-dark p-6 border border-gray-200 dark:border-the-frick-cream-subtle transition-colors duration-200">
-              <p className="text-gray-600 dark:text-the-frick-cream-muted italic mb-0 text-sm md:text-base transition-colors duration-200">"{joke}"</p>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-the-frick-slate-medium p-6 border border-gray-200 dark:border-the-frick-cream-subtle transition-colors duration-200">
-            <div className="flex items-start gap-4">
-              <AlertTriangle size={isMobile ? 20 : 24} className="text-the-frick-rust mt-1 transition-colors duration-200" />
-              <div>
-                <h4 className="text-the-frick-rust text-lg font-medium mb-2 transition-colors duration-200">URL Expiration Notice:</h4>
-                <p className="text-gray-900 dark:text-the-frick-cream text-sm md:text-base transition-colors duration-200">This URL will self-destruct on: <span className="font-medium">{expirationDate}</span></p>
-                <p className="text-gray-600 dark:text-the-frick-cream-muted mt-2 text-xs md:text-sm transition-colors duration-200">This URL is approximately {expandedUrl.length} characters long, which is {Math.round(expandedUrl.length / 20)} tweets worth of characters. Use responsibly.</p>
+            <div className="flex flex-wrap gap-3 text-sm text-the-frick-text">
+              <div className="flex items-center gap-2 bg-white border-2 border-the-frick-text px-3 py-1.5 rounded font-bold uppercase tracking-wide">
+                <Clock className="w-4 h-4 text-the-frick-rust" />
+                <span>Expires: {expirationDate}</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white border-2 border-the-frick-text px-3 py-1.5 rounded font-bold uppercase tracking-wide">
+                <BarChart3 className="w-4 h-4 text-the-frick-rust" />
+                <span>{expandedUrl.length} chars</span>
               </div>
             </div>
           </div>
+
+          {/* Action buttons */}
+          <div className="flex mt-6 border-t-3 border-the-frick-text -mx-6 md:-mx-8" style={{borderTopWidth: '3px'}}>
+            <button
+              onClick={copyToClipboard}
+              className="flex-1 flex items-center justify-center gap-2 py-4 bg-white hover:bg-the-frick-rust hover:text-white transition-all duration-200 border-r-3 border-the-frick-text font-bold uppercase tracking-wide text-sm"
+              style={{borderRightWidth: '3px'}}
+            >
+              <Copy className="w-5 h-5" />
+              <span>
+                {copied ? 'Copied!' : 'Copy'}
+              </span>
+            </button>
+
+            <button
+              onClick={openInNewTab}
+              className="flex-1 flex items-center justify-center gap-2 py-4 bg-white hover:bg-the-frick-rust hover:text-white transition-all duration-200 border-r-3 border-the-frick-text font-bold uppercase tracking-wide text-sm"
+              style={{borderRightWidth: '3px'}}
+            >
+              <ExternalLink className="w-5 h-5" />
+              <span>Open</span>
+            </button>
+
+            <button
+              onClick={shareUrl}
+              className="flex-1 flex items-center justify-center gap-2 py-4 bg-white hover:bg-the-frick-rust hover:text-white transition-all duration-200 font-bold uppercase tracking-wide text-sm"
+            >
+              <Share2 className="w-5 h-5" />
+              <span>Share</span>
+            </button>
+          </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 };

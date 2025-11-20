@@ -7,6 +7,8 @@ import { expandUrl } from '@/utils/urlExpander';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useAuth } from '@/contexts/AuthContext';
 import { isValidUrl, normalizeUrl, isCommonInvalidInput } from '@/utils/urlValidator';
+import { CoolMode } from '@/components/ui/cool-mode';
+import { ParticlesButton } from '@/components/ui/particles-button';
 
 interface UrlFormProps {
   onUrlExpanded: (expandedUrl: string) => void;
@@ -74,13 +76,24 @@ const UrlForm: React.FC<UrlFormProps> = ({ onUrlExpanded }) => {
           />
         </div>
 
-        <Button
-          type="submit"
-          disabled={isExpanding}
-          className={`bg-the-frick-rust hover:bg-the-frick-rust-muted text-white dark:text-the-frick-cream font-medium text-base px-8 py-6 border border-the-frick-rust hover:border-the-frick-rust-muted transition-all duration-200 ${isExpanding ? 'opacity-70' : ''}`}
+        <CoolMode
+          config={{
+            particleCount: 40,
+            speedHorz: 6,
+            speedUp: 8,
+            gravity: 0.6,
+            colors: ["#D4A574", "#F5F1E8", "#E8DCC8", "#8B7355", "#A67C52"],
+            sizeRange: [5, 10],
+            emojis: ["🍛", "🥥", "🍜", "🍕", "🌮", "🍔", "🍰", "🍩", "🥑", "🌶️", "🍱", "🥟"],
+          }}
         >
-          {isExpanding ? "Expanding..." : "Expand URL"}
-        </Button>
+          <ParticlesButton
+            type="submit"
+            disabled={isExpanding}
+          >
+            {isExpanding ? "Expanding..." : "Expand URL"}
+          </ParticlesButton>
+        </CoolMode>
       </div>
     </form>
   );
