@@ -127,9 +127,9 @@ const Index = () => {
         </section>
 
         {/* Satire Scroll Velocity Text Section */}
-        <section className="w-full py-12 bg-the-frick-rust overflow-hidden">
+        <section className="w-full py-6 md:py-12 bg-the-frick-rust overflow-hidden relative isolate">
           <ScrollVelocityContainer>
-            <ScrollVelocityRow baseVelocity={-2} className="text-white/90 text-2xl md:text-4xl font-bold font-display py-4">
+            <ScrollVelocityRow baseVelocity={-2} className="text-white/90 text-xl md:text-4xl font-bold font-display py-2 md:py-4">
               <span className="mx-8">⏰ Only 7 Days • </span>
               <span className="mx-8">Because Storage Costs Money • </span>
               <span className="mx-8">Use It or Lose It • </span>
@@ -137,7 +137,7 @@ const Index = () => {
               <span className="mx-8">No Exceptions • </span>
               <span className="mx-8">Temporary by Design • </span>
             </ScrollVelocityRow>
-            <ScrollVelocityRow baseVelocity={2} className="text-white/70 text-xl md:text-3xl font-display py-4">
+            <ScrollVelocityRow baseVelocity={2} className="text-white/70 text-base md:text-3xl font-display py-2 md:py-4">
               <span className="mx-8">I'm Too Cheap for Permanent Storage • </span>
               <span className="mx-8">Your Link Will Self-Destruct • </span>
               <span className="mx-8">Tick Tock Goes the Clock • </span>
@@ -149,7 +149,7 @@ const Index = () => {
         </section>
 
         {/* URL Input Form Section with Expiration Info */}
-        <section className="w-full pt-24 pb-16 md:pt-32 md:pb-24">
+        <section className="w-full pt-24 pb-16 md:pt-32 md:pb-24 relative isolate bg-the-frick-bg">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             <MagicCard
               className="bg-[#E8DCC8] rounded-[2rem]"

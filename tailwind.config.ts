@@ -121,6 +121,10 @@ export default {
 				'slide-in': {
 					'0%': { transform: 'translateY(20px)', opacity: '0' },
 					'100%': { transform: 'translateY(0)', opacity: '1' },
+				},
+				'shine': {
+					'0%': { backgroundPosition: '-200% 0' },
+					'100%': { backgroundPosition: '200% 0' },
 				}
 			},
 			animation: {
@@ -131,6 +135,10 @@ export default {
 				'bounce-slight': 'bounce-slight 2s ease-in-out infinite',
 				'float': 'float 3s ease-in-out infinite',
 				'slide-in': 'slide-in 0.6s ease-out forwards',
+				'shine': 'shine 3s ease-in-out infinite',
+			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 			},
 			fontFamily: {
 				'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],

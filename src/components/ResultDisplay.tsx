@@ -43,7 +43,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ expandedUrl }) => {
       // Add a slight delay to ensure the component is rendered
       setTimeout(() => {
         if (resultRef.current) {
-          resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 100);
     }
@@ -84,10 +84,16 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ expandedUrl }) => {
   return (
     <div className="w-full max-w-2xl mx-auto" ref={resultRef}>
       <div
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-the-frick-card-beige/80 to-the-frick-card-beige backdrop-blur-sm border-2 border-the-frick-rust/20 transition-all duration-500 hover:border-the-frick-rust/40 hover:shadow-2xl hover:shadow-the-frick-rust/10"
+        className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-the-frick-card-beige/80 to-the-frick-card-beige backdrop-blur-sm border-2 border-the-frick-rust/20 transition-all duration-500 hover:border-the-frick-rust/40 hover:shadow-2xl hover:shadow-the-frick-rust/20 hover:-translate-y-2"
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >
+        {/* Shine effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:animate-shine" />
+
+        {/* Glow effect */}
+        <div className="absolute -inset-2 bg-gradient-radial from-the-frick-rust/30 via-the-frick-rust/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-xl" />
+
         {/* Animated circle background */}
         <div
           className={`absolute rounded-full border-[35px] border-the-frick-rust/10 blur-md transition-all duration-700 ease-out ${
@@ -132,7 +138,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ expandedUrl }) => {
               onClick={copyToClipboard}
               className="flex-1 flex items-center justify-center gap-2 py-4 bg-white/40 hover:bg-white/60 transition-all duration-200 border-r border-the-frick-rust/20 group"
             >
-              <Copy className={`w-5 h-5 transition-colors duration-200 ${copied ? 'text-green-600' : 'text-the-frick-rust group-hover:text-the-frick-rust/80'}`} />
+              <Copy className="w-5 h-5 text-the-frick-rust group-hover:text-the-frick-rust/80 transition-colors duration-200" />
               <span className="font-medium text-the-frick-text">
                 {copied ? 'Copied!' : 'Copy'}
               </span>
