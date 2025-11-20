@@ -33,7 +33,7 @@ const ConfettiButton = forwardRef<ConfettiRef, ConfettiButtonProps>(
       const rect = event.currentTarget.getBoundingClientRect();
       const x = rect.left + rect.width / 2;
       const y = rect.top + rect.height / 2;
-      confettiInstance.current &&
+      if (confettiInstance.current) {
         confettiInstance.current({
           ...options,
           origin: {
@@ -41,6 +41,7 @@ const ConfettiButton = forwardRef<ConfettiRef, ConfettiButtonProps>(
             y: y / window.innerHeight,
           },
         });
+      }
       props.onClick?.(event);
     };
 

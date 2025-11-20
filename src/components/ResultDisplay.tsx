@@ -84,48 +84,46 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ expandedUrl }) => {
   return (
     <div className="w-full max-w-2xl mx-auto" ref={resultRef}>
       <div
-        className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-the-frick-card-beige/80 to-the-frick-card-beige backdrop-blur-sm border-2 border-the-frick-rust/20 transition-all duration-500 hover:border-the-frick-rust/40 hover:shadow-2xl hover:shadow-the-frick-rust/20 hover:-translate-y-2"
+        className="group relative overflow-hidden rounded-lg bg-white border-4 border-the-frick-text shadow-[12px_12px_0_0_#1A1A1A] transition-all duration-400 hover:shadow-[16px_16px_0_0_#1A1A1A] hover:-translate-y-1"
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >
-        {/* Shine effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:animate-shine" />
+        {/* Grid Pattern Overlay */}
+        <div className="absolute inset-0 pointer-events-none opacity-30 transition-opacity duration-400 group-hover:opacity-60" style={{
+          backgroundImage: `linear-gradient(to right, rgba(26, 26, 26, 0.03) 1px, transparent 1px),
+                            linear-gradient(to bottom, rgba(26, 26, 26, 0.03) 1px, transparent 1px)`,
+          backgroundSize: '8px 8px',
+          zIndex: 1
+        }} />
 
-        {/* Glow effect */}
-        <div className="absolute -inset-2 bg-gradient-radial from-the-frick-rust/30 via-the-frick-rust/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-xl" />
-
-        {/* Animated circle background */}
-        <div
-          className={`absolute rounded-full border-[35px] border-the-frick-rust/10 blur-md transition-all duration-700 ease-out ${
-            hovering
-              ? 'w-[140px] h-[140px] -top-[30%] left-[50%]'
-              : 'w-[100px] h-[100px] -top-[40%] -left-[20%]'
-          }`}
-          style={{
-            transform: hovering ? 'translateX(-50%)' : 'none'
-          }}
-        />
+        {/* Dots Pattern Overlay */}
+        <div className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-400 group-hover:opacity-100" style={{
+          backgroundImage: 'radial-gradient(#D4C9BA 1px, transparent 1px)',
+          backgroundSize: '16px 16px',
+          backgroundPosition: '-8px -8px',
+          zIndex: 1
+        }} />
 
         {/* Content area */}
         <div className="relative z-10 p-6 md:p-8 flex flex-col min-h-[280px]">
           {/* Text section */}
           <div className="flex-grow space-y-4">
-            <h3 className="text-2xl md:text-3xl font-bold text-the-frick-text">
+            <h3 className="text-2xl md:text-3xl font-black text-the-frick-text uppercase tracking-tight">
               {title}
             </h3>
 
-            <div className="bg-white/60 backdrop-blur-sm p-4 rounded-2xl border border-the-frick-rust/20 max-h-32 overflow-y-auto">
-              <p className="font-mono text-sm md:text-base text-the-frick-text break-all">
+            <div className="bg-the-frick-card-beige p-4 rounded border-3 border-the-frick-text max-h-32 overflow-y-auto shadow-[4px_4px_0_0_rgba(26,26,26,0.2)]" style={{borderWidth: '3px'}}>
+              <p className="font-mono text-sm md:text-base text-the-frick-text break-all font-semibold">
                 {expandedUrl}
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3 text-sm text-the-frick-text-muted">
-              <div className="flex items-center gap-2 bg-white/40 px-3 py-1.5 rounded-full">
+            <div className="flex flex-wrap gap-3 text-sm text-the-frick-text">
+              <div className="flex items-center gap-2 bg-white border-2 border-the-frick-text px-3 py-1.5 rounded font-bold uppercase tracking-wide">
                 <Clock className="w-4 h-4 text-the-frick-rust" />
                 <span>Expires: {expirationDate}</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/40 px-3 py-1.5 rounded-full">
+              <div className="flex items-center gap-2 bg-white border-2 border-the-frick-text px-3 py-1.5 rounded font-bold uppercase tracking-wide">
                 <BarChart3 className="w-4 h-4 text-the-frick-rust" />
                 <span>{expandedUrl.length} chars</span>
               </div>
@@ -133,31 +131,33 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ expandedUrl }) => {
           </div>
 
           {/* Action buttons */}
-          <div className="flex mt-6 border-t border-the-frick-rust/20 -mx-6 md:-mx-8">
+          <div className="flex mt-6 border-t-3 border-the-frick-text -mx-6 md:-mx-8" style={{borderTopWidth: '3px'}}>
             <button
               onClick={copyToClipboard}
-              className="flex-1 flex items-center justify-center gap-2 py-4 bg-white/40 hover:bg-white/60 transition-all duration-200 border-r border-the-frick-rust/20 group"
+              className="flex-1 flex items-center justify-center gap-2 py-4 bg-white hover:bg-the-frick-rust hover:text-white transition-all duration-200 border-r-3 border-the-frick-text font-bold uppercase tracking-wide text-sm"
+              style={{borderRightWidth: '3px'}}
             >
-              <Copy className="w-5 h-5 text-the-frick-rust group-hover:text-the-frick-rust/80 transition-colors duration-200" />
-              <span className="font-medium text-the-frick-text">
+              <Copy className="w-5 h-5" />
+              <span>
                 {copied ? 'Copied!' : 'Copy'}
               </span>
             </button>
 
             <button
               onClick={openInNewTab}
-              className="flex-1 flex items-center justify-center gap-2 py-4 bg-white/40 hover:bg-white/60 transition-all duration-200 border-r border-the-frick-rust/20 group"
+              className="flex-1 flex items-center justify-center gap-2 py-4 bg-white hover:bg-the-frick-rust hover:text-white transition-all duration-200 border-r-3 border-the-frick-text font-bold uppercase tracking-wide text-sm"
+              style={{borderRightWidth: '3px'}}
             >
-              <ExternalLink className="w-5 h-5 text-the-frick-rust group-hover:text-the-frick-rust/80 transition-colors duration-200" />
-              <span className="font-medium text-the-frick-text">Open</span>
+              <ExternalLink className="w-5 h-5" />
+              <span>Open</span>
             </button>
 
             <button
               onClick={shareUrl}
-              className="flex-1 flex items-center justify-center gap-2 py-4 bg-white/40 hover:bg-white/60 transition-all duration-200 group"
+              className="flex-1 flex items-center justify-center gap-2 py-4 bg-white hover:bg-the-frick-rust hover:text-white transition-all duration-200 font-bold uppercase tracking-wide text-sm"
             >
-              <Share2 className="w-5 h-5 text-the-frick-rust group-hover:text-the-frick-rust/80 transition-colors duration-200" />
-              <span className="font-medium text-the-frick-text">Share</span>
+              <Share2 className="w-5 h-5" />
+              <span>Share</span>
             </button>
           </div>
         </div>

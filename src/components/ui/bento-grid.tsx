@@ -32,7 +32,7 @@ const BentoCard = ({
   name: string;
   className: string;
   background: ReactNode;
-  Icon: any;
+  Icon: React.ComponentType<{ className?: string }>;
   description: string;
   href?: string;
   cta?: string;
@@ -40,7 +40,7 @@ const BentoCard = ({
   <div
     key={name}
     className={cn(
-      "group relative col-span-3 flex flex-col overflow-hidden rounded-3xl cursor-pointer h-[180px] transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-the-frick-rust/20",
+      "group relative col-span-3 flex flex-col overflow-hidden rounded-lg cursor-pointer h-[180px] transition-all duration-300 ease-out",
       className,
     )}
   >

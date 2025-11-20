@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { toast } from 'sonner';
 import { getUrlMapping } from '@/lib/aws';
-import { useTheme } from '@/contexts/ThemeContext';
-import { Clock, Link } from 'lucide-react';
-import { Progress } from "@/components/ui/progress";
-import { Card } from "@/components/ui/card";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Clock } from 'lucide-react';
+import HamsterLoader from '@/components/ui/hamster-loader';
 
 // Array of satirical messages for the redirect screen
 const SATIRICAL_MESSAGES = [
@@ -28,8 +26,6 @@ const SURPRISE_IMAGE_URL = "https://asset-projects-905418210727.s3.ap-southeast-
 const ExpandedUrl = () => {
   const { code } = useParams();
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
-  const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
   const [originalUrl, setOriginalUrl] = useState<string | null>(null);
   const [countdown, setCountdown] = useState(5);
@@ -109,76 +105,86 @@ const ExpandedUrl = () => {
 
   return (
     <div className="min-h-screen bg-the-frick-bg text-the-frick-text flex flex-col">
-      {/* Header - matching landing page */}
-      <header className="py-3 md:py-6 bg-the-frick-bg/80 backdrop-blur-md border-b border-the-frick-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
-          <h1 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold font-display">
-            <span className="text-the-frick-text">url-expander</span>
-            <span className="text-the-frick-rust">.wtf</span>
-          </h1>
+      {/* Header - Brutalist */}
+      <header className="py-4 md:py-6 sticky top-0 z-40 bg-the-frick-bg border-b-4 border-the-frick-text">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <RouterLink to="/">
+            <h1 className="text-base md:text-2xl font-black font-display cursor-pointer hover:translate-x-1 transition-transform uppercase tracking-tight">
+              <span className="text-the-frick-text">url-expander</span>
+              <span className="text-the-frick-rust">.wtf</span>
+            </h1>
+          </RouterLink>
         </div>
       </header>
 
       {/* Main content */}
       <main className="flex-1 flex items-center justify-center w-full py-6 md:py-8">
         <div className="max-w-2xl mx-auto px-6 sm:px-8 md:px-12 w-full">
-          <div className="bg-the-frick-card-beige rounded-xl md:rounded-2xl lg:rounded-3xl p-8 sm:p-10 md:p-12">
-            {isLoading ? (
-              // Loading state
-              <div className="flex flex-col items-center justify-center space-y-4 sm:space-y-6 py-4 sm:py-8">
-                <div className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 rounded-full bg-the-frick-rust/20 flex items-center justify-center">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 border-3 sm:border-4 border-t-transparent border-the-frick-rust rounded-full animate-spin"></div>
-                </div>
+          <div className="bg-white border-4 border-the-frick-text rounded-lg shadow-[12px_12px_0_0_#1A1A1A] p-8 sm:p-10 md:p-12 relative overflow-hidden">
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
+              backgroundImage: `linear-gradient(to right, rgba(26, 26, 26, 0.03) 1px, transparent 1px),
+                                linear-gradient(to bottom, rgba(26, 26, 26, 0.03) 1px, transparent 1px)`,
+              backgroundSize: '8px 8px',
+              zIndex: 1
+            }} />
 
-                <div className="text-lg sm:text-xl md:text-2xl font-bold font-display text-the-frick-text">
-                  Processing URL...
-                </div>
+            <div className="relative z-10">
+              {isLoading ? (
+                // Loading state with hamster
+                <div className="flex flex-col items-center justify-center space-y-6 py-8">
+                  <HamsterLoader />
 
-                <div className="w-full max-w-md h-2 bg-the-frick-rust/20 rounded-full overflow-hidden">
-                  <div className="h-full bg-the-frick-rust animate-pulse" style={{width: '70%'}}></div>
-                </div>
-              </div>
-            ) : (
-              // Redirect state
-              <div className="flex flex-col items-center space-y-4 sm:space-y-5 md:space-y-6">
-                <div className="overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl w-full max-w-xs sm:max-w-sm md:max-w-md">
-                  <img
-                    src={SURPRISE_IMAGE_URL}
-                    alt="Surprise!"
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-
-                <div className="flex flex-col items-center text-center space-y-3 sm:space-y-4 md:space-y-5 w-full">
-                  <div className="h-12 w-12 sm:h-13 sm:w-13 md:h-14 md:w-14 rounded-full bg-the-frick-rust/20 flex items-center justify-center">
-                    <Clock className="h-6 w-6 sm:h-6 sm:w-6 md:h-7 md:w-7 text-the-frick-rust" />
+                  <div className="text-lg sm:text-xl md:text-2xl font-black font-display text-the-frick-text uppercase tracking-tight">
+                    Processing URL...
                   </div>
 
-                  <div className="space-y-2 sm:space-y-2.5 md:space-y-3">
-                    <div className="text-xl sm:text-2xl md:text-3xl font-bold font-display text-the-frick-text leading-tight">
-                      Redirecting you...
+                  <p className="text-sm text-the-frick-text-muted font-medium">
+                    Our server hamsters are running to process your URL
+                  </p>
+                </div>
+              ) : (
+                // Redirect state
+                <div className="flex flex-col items-center space-y-6">
+                  <div className="overflow-hidden rounded-lg border-4 border-the-frick-text shadow-[8px_8px_0_0_#1A1A1A] w-full max-w-xs sm:max-w-sm md:max-w-md">
+                    <img
+                      src={SURPRISE_IMAGE_URL}
+                      alt="Surprise!"
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+
+                  <div className="flex flex-col items-center text-center space-y-5 w-full">
+                    <div className="w-16 h-16 bg-the-frick-rust border-4 border-the-frick-text flex items-center justify-center rotate-6">
+                      <Clock className="h-8 w-8 text-white" />
                     </div>
 
-                    <p className="text-xs sm:text-sm md:text-base text-the-frick-text/70 max-w-md mx-auto leading-relaxed px-2 sm:px-4">
-                      {message}
-                    </p>
+                    <div className="space-y-3">
+                      <div className="text-2xl md:text-3xl font-black font-display text-the-frick-text uppercase tracking-tight">
+                        Redirecting you...
+                      </div>
 
-                    <p className="text-sm sm:text-base md:text-lg font-bold text-the-frick-rust pt-1 sm:pt-2">
-                      Redirecting in {countdown} seconds...
-                    </p>
-                  </div>
+                      <p className="text-sm md:text-base text-the-frick-text font-medium max-w-md mx-auto">
+                        {message}
+                      </p>
 
-                  <div className="w-full max-w-sm sm:max-w-md mt-2 sm:mt-3 md:mt-4">
-                    <div className="w-full h-2 bg-the-frick-text/20 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-the-frick-rust transition-all duration-1000 ease-linear"
-                        style={{width: `${(5 - countdown) / 5 * 100}%`}}
-                      />
+                      <p className="text-base md:text-lg font-black text-the-frick-rust uppercase tracking-wide pt-2">
+                        Redirecting in {countdown} seconds...
+                      </p>
+                    </div>
+
+                    <div className="w-full max-w-sm sm:max-w-md mt-4">
+                      <div className="w-full h-3 bg-the-frick-card-beige border-2 border-the-frick-text rounded overflow-hidden">
+                        <div
+                          className="h-full bg-the-frick-rust transition-all duration-1000 ease-linear"
+                          style={{width: `${(5 - countdown) / 5 * 100}%`}}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </main>

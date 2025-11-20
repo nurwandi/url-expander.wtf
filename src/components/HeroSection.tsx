@@ -42,7 +42,11 @@ const features = [
     description: "Why make URLs shorter when you can make them absurdly longer? Breaking conventions since 2025.",
     className: "col-span-3 md:col-span-1",
     background: (
-      <div className="absolute inset-0 bg-gradient-to-br from-the-frick-rust/20 via-transparent to-transparent opacity-50" />
+      <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
+        backgroundImage: `linear-gradient(to right, rgba(26, 26, 26, 0.03) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(26, 26, 26, 0.03) 1px, transparent 1px)`,
+        backgroundSize: '8px 8px'
+      }} />
     ),
   },
   {
@@ -51,7 +55,11 @@ const features = [
     description: "Advanced algorithms to generate maximum character chaos. Over-engineering at its finest.",
     className: "col-span-3 md:col-span-1",
     background: (
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 via-transparent to-transparent opacity-50" />
+      <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
+        backgroundImage: `linear-gradient(to right, rgba(26, 26, 26, 0.03) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(26, 26, 26, 0.03) 1px, transparent 1px)`,
+        backgroundSize: '8px 8px'
+      }} />
     ),
   },
   {
@@ -60,7 +68,11 @@ const features = [
     description: "Achieving absolutely nothing productive while having a great time doing it. Peak performance.",
     className: "col-span-3 md:col-span-1",
     background: (
-      <div className="absolute inset-0 bg-gradient-to-br from-rose-500/20 via-transparent to-transparent opacity-50" />
+      <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
+        backgroundImage: `linear-gradient(to right, rgba(26, 26, 26, 0.03) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(26, 26, 26, 0.03) 1px, transparent 1px)`,
+        backgroundSize: '8px 8px'
+      }} />
     ),
   },
 ];
@@ -103,13 +115,13 @@ const HeroSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Bento Grid - Feature Cards */}
+      {/* Bento Grid - Feature Cards - Brutalist */}
       <BentoGrid>
         {features.map((feature) => (
           <BentoCard
             key={feature.name}
             {...feature}
-            className={`${feature.className} bg-white/40 backdrop-blur-md border-2 border-white/60 shadow-lg hover:border-the-frick-rust/30 hover:bg-white/60`}
+            className={`${feature.className} bg-white border-4 border-the-frick-text shadow-[8px_8px_0_0_#1A1A1A] hover:shadow-[10px_10px_0_0_#1A1A1A] hover:-translate-y-1 transition-all duration-300`}
           />
         ))}
       </BentoGrid>

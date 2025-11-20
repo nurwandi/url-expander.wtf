@@ -125,6 +125,11 @@ export default {
 				'shine': {
 					'0%': { backgroundPosition: '-200% 0' },
 					'100%': { backgroundPosition: '200% 0' },
+				},
+				'border-beam': {
+					'100%': {
+						'offset-distance': '100%',
+					},
 				}
 			},
 			animation: {
@@ -136,6 +141,7 @@ export default {
 				'float': 'float 3s ease-in-out infinite',
 				'slide-in': 'slide-in 0.6s ease-out forwards',
 				'shine': 'shine 3s ease-in-out infinite',
+				'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
